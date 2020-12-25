@@ -8,9 +8,10 @@
 
 #import "ViewController.h"
 #import "RichTextEditorDemo.h"
+#import "DPCCustomScrollView.h"
 
-@interface ViewController ()
-
+@interface ViewController ()<UIScrollViewDelegate>
+@property (nonatomic, strong) DPCCustomScrollView *scrollV;
 @end
 
 @implementation ViewController
@@ -18,14 +19,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(100, 100, 100, 60);
-    [btn setTitle:@"测试" forState:UIControlStateNormal];
-    btn.backgroundColor = [UIColor cyanColor];
-    [btn addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
-    
-    [self performSelector:@selector(btnAction)];
+//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    btn.frame = CGRectMake(100, 100, 100, 60);
+//    [btn setTitle:@"测试" forState:UIControlStateNormal];
+//    btn.backgroundColor = [UIColor cyanColor];
+//    [btn addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:btn];
+//
+//    [self performSelector:@selector(btnAction)];
+    self.scrollV = [[DPCCustomScrollView alloc] initWithFrame:self.view.frame];
+    self.scrollV.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 0);
+    self.scrollV.contentOffset = CGPointMake([UIScreen mainScreen].bounds.size.width, 0);
+    self.scrollV.pagingEnabled = YES;
+    self.scrollV.delegate = self;
+    self.scrollV.backgroundColor = [UIColor redColor];
+    [self.view addSubview:self.scrollV];
 }
 
 -(void)btnAction{

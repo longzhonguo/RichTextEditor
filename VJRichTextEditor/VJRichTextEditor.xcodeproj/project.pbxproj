@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		182BEE222596390300656093 /* DPCCustomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 182BEE212596390300656093 /* DPCCustomScrollView.m */; };
 		AB063ADB2595B50B00825194 /* UIFont+fontNameHeavity.m in Sources */ = {isa = PBXBuildFile; fileRef = AB063AD72595B50A00825194 /* UIFont+fontNameHeavity.m */; };
 		AB063ADC2595B50B00825194 /* UIViewExt.m in Sources */ = {isa = PBXBuildFile; fileRef = AB063AD82595B50B00825194 /* UIViewExt.m */; };
 		AB70DCE92595953B00D1EDF1 /* DPCChooseCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB70DCE82595953B00D1EDF1 /* DPCChooseCoverView.m */; };
@@ -93,6 +94,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		182BEE202596390300656093 /* DPCCustomScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPCCustomScrollView.h; sourceTree = "<group>"; };
+		182BEE212596390300656093 /* DPCCustomScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPCCustomScrollView.m; sourceTree = "<group>"; };
 		AB063AD72595B50A00825194 /* UIFont+fontNameHeavity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+fontNameHeavity.m"; sourceTree = "<group>"; };
 		AB063AD82595B50B00825194 /* UIViewExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewExt.m; sourceTree = "<group>"; };
 		AB063AD92595B50B00825194 /* UIFont+fontNameHeavity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+fontNameHeavity.h"; sourceTree = "<group>"; };
@@ -214,6 +217,8 @@
 				AB063AD72595B50A00825194 /* UIFont+fontNameHeavity.m */,
 				AB063ADA2595B50B00825194 /* UIViewExt.h */,
 				AB063AD82595B50B00825194 /* UIViewExt.m */,
+				182BEE202596390300656093 /* DPCCustomScrollView.h */,
+				182BEE212596390300656093 /* DPCCustomScrollView.m */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -520,6 +525,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				182BEE222596390300656093 /* DPCCustomScrollView.m in Sources */,
 				AB063ADC2595B50B00825194 /* UIViewExt.m in Sources */,
 				CF6A767323408E3100863373 /* WKWebView+HackishAccessoryHiding.m in Sources */,
 				CF4DB43122C301E100BDA3DC /* ViewController.m in Sources */,
