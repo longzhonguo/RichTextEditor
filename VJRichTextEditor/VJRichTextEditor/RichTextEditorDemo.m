@@ -13,7 +13,7 @@
 -(void)viewDidLoad{
     [super viewDidLoad];
     
-    [self setHTML:@"这是一个测试"];
+//    [self setHTML:@"这是一个测试"];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"HTML" style:UIBarButtonItemStylePlain target:self action:@selector(getHTMLText)];
     

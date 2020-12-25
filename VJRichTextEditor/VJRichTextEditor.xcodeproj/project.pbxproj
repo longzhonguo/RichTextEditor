@@ -234,15 +234,15 @@
 		CF4DB44222C3023A00BDA3DC /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				CF4DB44B22C3023A00BDA3DC /* editor.html */,
+				CF4DB44C22C3023A00BDA3DC /* image */,
+				CF4DB49522C3023B00BDA3DC /* jQuery.js */,
+				CF4DB49422C3023B00BDA3DC /* JSBeautifier.js */,
+				CF4DB44322C3023A00BDA3DC /* ZSSRichTextEditor.js */,
+				CF4DB44522C3023A00BDA3DC /* RichToolBar */,
+				CF4DB48B22C3023B00BDA3DC /* VJCategory */,
 				CF4DB44422C3023A00BDA3DC /* ZSSRichTextEditor.h */,
 				CF4DB48A22C3023B00BDA3DC /* ZSSRichTextEditor.m */,
-				CF4DB44322C3023A00BDA3DC /* ZSSRichTextEditor.js */,
-				CF4DB44B22C3023A00BDA3DC /* editor.html */,
-				CF4DB49422C3023B00BDA3DC /* JSBeautifier.js */,
-				CF4DB49522C3023B00BDA3DC /* jQuery.js */,
-				CF4DB48B22C3023B00BDA3DC /* VJCategory */,
-				CF4DB44522C3023A00BDA3DC /* RichToolBar */,
-				CF4DB44C22C3023A00BDA3DC /* image */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -619,14 +619,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = THT3GQP5YR;
+				DEVELOPMENT_TEAM = 4Q24HAH839;
 				INFOPLIST_FILE = VJRichTextEditor/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vj.VJRichTextEditor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jinke.VJRichTextEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -637,14 +637,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = THT3GQP5YR;
+				DEVELOPMENT_TEAM = 4Q24HAH839;
 				INFOPLIST_FILE = VJRichTextEditor/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vj.VJRichTextEditor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jinke.VJRichTextEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

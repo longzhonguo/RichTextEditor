@@ -29,6 +29,12 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *imageButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *H1Button;
+
+@property (weak, nonatomic) IBOutlet UIButton *H2Button;
+
+@property (weak, nonatomic) IBOutlet UIButton *unorderButton;
+@property (weak, nonatomic) IBOutlet UIButton *orderButton;
 + (instancetype)editorBar;
 
 @property (nonatomic,weak) id<KWEditorBarDelegate> delegate;

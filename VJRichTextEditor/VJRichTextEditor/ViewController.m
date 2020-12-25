@@ -24,6 +24,8 @@
     btn.backgroundColor = [UIColor cyanColor];
     [btn addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
+    
+    [self performSelector:@selector(btnAction)];
 }
 
 -(void)btnAction{

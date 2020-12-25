@@ -36,6 +36,8 @@ typedef void (^callBack)(NSString *html);
 - (void)setItalic;
 
 ///设置字体
+- (void)heading1;
+
 - (void)heading2;
 
 - (void)heading3;
@@ -53,6 +55,9 @@ typedef void (^callBack)(NSString *html);
 
 ///无序
 - (void)setUnorderedList;
+
+///有序
+- (void)setOrderedList;
 
 ///缩进
 - (void)setIndent;

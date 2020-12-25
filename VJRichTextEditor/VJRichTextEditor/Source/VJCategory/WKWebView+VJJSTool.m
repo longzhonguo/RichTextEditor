@@ -58,6 +58,11 @@
     [self evaluateJavaScript:trigger completionHandler:nil];
 }
 #pragma mark - 设置字体
+- (void)heading1 {
+    NSString *trigger = @"zss_editor.setHeading('h1');";
+    [self evaluateJavaScript:trigger completionHandler:nil];
+}
+
 - (void)heading2 {
     NSString *trigger = @"zss_editor.setHeading('h2');";
     [self evaluateJavaScript:trigger completionHandler:nil];
@@ -97,6 +102,12 @@
 #pragma mark - 无序
 - (void)setUnorderedList {
     NSString *trigger = @"zss_editor.setUnorderedList();";
+    [self evaluateJavaScript:trigger completionHandler:nil];
+}
+
+#pragma mark - 有序
+- (void)setOrderedList {
+    NSString *trigger = @"zss_editor.setOrderedList();";
     [self evaluateJavaScript:trigger completionHandler:nil];
 }
 

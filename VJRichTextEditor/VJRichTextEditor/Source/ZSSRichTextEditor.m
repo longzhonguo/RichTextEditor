@@ -122,23 +122,15 @@
 #pragma mark -editorbarDelegate
 - (void)editorBar:(KWEditorBar *)editorBar didClickIndex:(NSInteger)buttonIndex{
     switch (buttonIndex) {
-        case 0:{//键盘唤醒与隐藏
-            if (self.toolBarView.transform.ty < 0) {
-                [self.editorView hiddenKeyboard];
-            }else{
-                [self.editorView focusTextEditor];
-            }
-        }
-            break;
-        case 1:{//后退
-            [self.editorView undo];
-        }
-            break;
-        case 2:{//前进
-            [self.editorView redo];
-        }
-            break;
-        case 3:{//字体
+//        case 0:{//键盘唤醒与隐藏
+//            if (self.toolBarView.transform.ty < 0) {
+//                [self.editorView hiddenKeyboard];
+//            }else{
+//                [self.editorView focusTextEditor];
+//            }
+//        }
+//            break;
+        case 0:{//字体
             editorBar.fontButton.selected = !editorBar.fontButton.selected;
             if (editorBar.fontButton.selected) {
                 [self.view addSubview:self.fontBar];
@@ -147,12 +139,36 @@
             }
         }
             break;
-        case 4:{//超连接
-            [self insertLink];
+        case 1:{//H1
+            [self.editorView heading1];
+        }
+            break;
+        case 2:{//H2
+            [self.editorView heading2];
+        }
+            break;
+        case 3:{//无序列
+            [self.editorView setUnorderedList];
+        }
+            break;
+        case 4:{//有序列
+            [self.editorView setOrderedList];
         }
             break;
         case 5:{//图片
             [self insertImage];
+        }
+            break;
+        case 6:{//竖线
+            
+        }
+            break;
+        case 7:{//后退
+            [self.editorView undo];
+        }
+            break;
+        case 8:{//前进
+            [self.editorView redo];
         }
             break;
         default:
@@ -246,7 +262,7 @@
 
 #pragma mark - keyboard
 - (void)keyBoardWillChangeFrame:(NSNotification*)notification{
-    CGRect frame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];    
+    CGRect frame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGFloat duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     if (frame.origin.y == pDeviceHeight) {
         
@@ -539,12 +555,12 @@
 //        if (err) {
 //            return ;
 //        }
-//        
+//
 //        if (resp[@"url"]) {
 //            [self insertImage:resp[@"url"] alt:nil];
 //            [self.editorView focusTextEditor];
 //        }
-//        
+//
 //    }];
     
     [picker.presentingViewController dismissViewControllerAnimated:YES completion:nil];
@@ -723,15 +739,14 @@
         WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc]init];
         WKUserContentController *userCon = [[WKUserContentController alloc]init];
         config.userContentController = userCon;
-        _editorView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, pDeviceWidth, self.view.frame.size.height-KWEditorBar_Height) configuration:config];
+        _editorView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, pDeviceWidth, self.view.frame.size.height-KWEditorBar_Height-40) configuration:config];
         [userCon addScriptMessageHandler:self name:@"column"];
         _editorView.navigationDelegate = self;
         _editorView.UIDelegate = self;
         _editorView.hidesInputAccessoryView = YES;
         _editorView.scrollView.bounces = NO;
-        _editorView.backgroundColor = [UIColor whiteColor];
+        _editorView.backgroundColor = [UIColor greenColor];
         [_editorView addObserver:self forKeyPath:@"URL" options:NSKeyValueObservingOptionNew context:nil];
-
     }
     return _editorView;
 }

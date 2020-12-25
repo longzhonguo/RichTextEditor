@@ -13,6 +13,11 @@
 @end
 @implementation KWEditorBar
 
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    [self.H1Button setImage:[UIImage imageNamed:@"Aalhover"] forState:UIControlStateSelected];
+}
+
 - (CALayer *)topline{
     if (_topline) {
         CALayer *border = [CALayer layer];
@@ -35,39 +40,75 @@
 
 }
 
+// 字体
+- (IBAction)clickfont:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(editorBar:didClickIndex:)]) {
+        [self.delegate editorBar:self didClickIndex:0];
+    }
+}
+
+// H1
+- (IBAction)clickH1:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(editorBar:didClickIndex:)]) {
+        [self.delegate editorBar:self didClickIndex:1];
+    }
+}
+// H2
+- (IBAction)clickH2:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(editorBar:didClickIndex:)]) {
+        [self.delegate editorBar:self didClickIndex:2];
+    }
+}
+// 无序排列
+- (IBAction)clickUnOrderList:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(editorBar:didClickIndex:)]) {
+        [self.delegate editorBar:self didClickIndex:3];
+    }
+}
+// 有序排列
+- (IBAction)clickOrderList:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(editorBar:didClickIndex:)]) {
+        [self.delegate editorBar:self didClickIndex:4];
+    }
+}
+// 点击图片
 - (IBAction)clickImg:(id)sender {
     if ([self.delegate respondsToSelector:@selector(editorBar:didClickIndex:)]) {
         [self.delegate editorBar:self didClickIndex:5];
     }
 }
-
-- (IBAction)clickUndo:(id)sender {
+// 点击竖线
+- (IBAction)clickLine:(id)sender {
     if ([self.delegate respondsToSelector:@selector(editorBar:didClickIndex:)]) {
-        [self.delegate editorBar:self didClickIndex:1];
+        [self.delegate editorBar:self didClickIndex:6];
     }
 }
+// 撤销
+- (IBAction)clickUndo:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(editorBar:didClickIndex:)]) {
+        [self.delegate editorBar:self didClickIndex:7];
+    }
+}
+// 前进
 - (IBAction)clickRedo:(id)sender {
     if ([self.delegate respondsToSelector:@selector(editorBar:didClickIndex:)]) {
         
-        [self.delegate editorBar:self didClickIndex:2];
-    }
-}
-- (IBAction)clickfont:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(editorBar:didClickIndex:)]) {
-        [self.delegate editorBar:self didClickIndex:3];
-    }
-}
-- (IBAction)clickLink:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(editorBar:didClickIndex:)]) {
-        [self.delegate editorBar:self didClickIndex:4];
+        [self.delegate editorBar:self didClickIndex:8];
     }
 }
 
-- (IBAction)clickKeyboard:(id)sender {
-    
-    if ([self.delegate respondsToSelector:@selector(editorBar:didClickIndex:)]) {
-        [self.delegate editorBar:self didClickIndex:0];
-    }
-}
+//// 链接
+//- (IBAction)clickLink:(id)sender {
+//    if ([self.delegate respondsToSelector:@selector(editorBar:didClickIndex:)]) {
+//        [self.delegate editorBar:self didClickIndex:4];
+//    }
+//}
+//// 键盘升降
+//- (IBAction)clickKeyboard:(id)sender {
+//
+//    if ([self.delegate respondsToSelector:@selector(editorBar:didClickIndex:)]) {
+//        [self.delegate editorBar:self didClickIndex:0];
+//    }
+//}
 
 @end
