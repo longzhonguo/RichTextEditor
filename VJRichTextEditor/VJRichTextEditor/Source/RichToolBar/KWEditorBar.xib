@@ -18,16 +18,16 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="JmE-An-1Ft"/>
                     </constraints>
-                    <state key="normal" image="ziti.png"/>
-                    <state key="selected" image="ziti_hover"/>
+                    <state key="normal" image="Aa_bjq"/>
+                    <state key="selected" image="Aa_bjq_l"/>
                     <connections>
                         <action selector="clickfont:" destination="rVY-Md-yuA" eventType="touchUpInside" id="8VN-xc-Xh0"/>
                     </connections>
                 </button>
                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z31-VU-O4g" userLabel="H1">
                     <rect key="frame" x="41.5" y="1" width="42" height="48"/>
-                    <state key="normal" image="Aal.png"/>
-                    <state key="selected" image="Aalhover.png">
+                    <state key="normal" image="h1_bjq"/>
+                    <state key="selected" image="h1_bjq_l">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                     <connections>
@@ -36,31 +36,32 @@
                 </button>
                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hD8-Nq-pm8" userLabel="H2">
                     <rect key="frame" x="83.5" y="1" width="41.5" height="48"/>
-                    <state key="normal" image="Aam.png"/>
-                    <state key="selected" image="Aamhover.png"/>
+                    <state key="normal" image="h2_bjq"/>
+                    <state key="selected" image="h2_bjq_l"/>
                     <connections>
                         <action selector="clickH2:" destination="rVY-Md-yuA" eventType="touchUpInside" id="gaM-Ke-6dE"/>
                     </connections>
                 </button>
                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCc-KM-dYe" userLabel="unorder">
                     <rect key="frame" x="125" y="1" width="41.5" height="48"/>
-                    <state key="normal" image="wuxuliebiao.png"/>
-                    <state key="selected" image="wuxuliebiao.png"/>
+                    <state key="normal" image="点序列_bjq"/>
+                    <state key="selected" image="点序列_bjq_l"/>
                     <connections>
                         <action selector="clickUnOrderList:" destination="rVY-Md-yuA" eventType="touchUpInside" id="opl-nq-vsH"/>
                     </connections>
                 </button>
                 <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CLU-6Q-k6l" userLabel="order">
                     <rect key="frame" x="166.5" y="1" width="42" height="48"/>
-                    <state key="normal" image="wuxuliebiao.png"/>
-                    <state key="selected" image="wuxuliebiaohover.png"/>
+                    <state key="normal" image="数字序列_bjq"/>
+                    <state key="selected" image="数字序列_bjq_l"/>
                     <connections>
                         <action selector="clickOrderList:" destination="rVY-Md-yuA" eventType="touchUpInside" id="bNS-88-32f"/>
                     </connections>
                 </button>
                 <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y7U-Ow-Puv" userLabel="tupian">
                     <rect key="frame" x="208.5" y="1" width="41.5" height="48"/>
-                    <state key="normal" image="tupian.png"/>
+                    <state key="normal" image="图片_bjq"/>
+                    <state key="selected" image="图片_bjq"/>
                     <connections>
                         <action selector="clickImg:" destination="rVY-Md-yuA" eventType="touchUpInside" id="rY3-iu-MiM"/>
                     </connections>
@@ -74,14 +75,16 @@
                 </button>
                 <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hgs-x2-K9G" userLabel="undo">
                     <rect key="frame" x="291.5" y="1" width="42" height="48"/>
-                    <state key="normal" image="chexiao.png"/>
+                    <state key="normal" image="撤回_bjq_y"/>
+                    <state key="selected" image="撤回_bjq"/>
                     <connections>
                         <action selector="clickUndo:" destination="rVY-Md-yuA" eventType="touchUpInside" id="3Ry-by-I2G"/>
                     </connections>
                 </button>
                 <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zQW-lE-t8G" userLabel="redo">
                     <rect key="frame" x="333.5" y="1" width="41.5" height="48"/>
-                    <state key="normal" image="chongzuo.png"/>
+                    <state key="normal" image="反撤回_bjq_y"/>
+                    <state key="selected" image="反撤回_bjq_y"/>
                     <connections>
                         <action selector="clickRedo:" destination="rVY-Md-yuA" eventType="touchUpInside" id="dOs-E3-X1r"/>
                     </connections>
@@ -141,17 +144,20 @@
         </view>
     </objects>
     <resources>
-        <image name="Aal.png" width="19" height="14"/>
-        <image name="Aalhover.png" width="19" height="14"/>
-        <image name="Aam.png" width="19" height="14"/>
-        <image name="Aamhover.png" width="19" height="14"/>
+        <image name="Aa_bjq" width="20" height="20"/>
+        <image name="Aa_bjq_l" width="20" height="20"/>
         <image name="I.png" width="20" height="20"/>
-        <image name="chexiao.png" width="20" height="20"/>
-        <image name="chongzuo.png" width="20" height="20"/>
-        <image name="tupian.png" width="20" height="20"/>
-        <image name="wuxuliebiao.png" width="20" height="20"/>
-        <image name="wuxuliebiaohover.png" width="20" height="20"/>
-        <image name="ziti.png" width="20" height="20"/>
-        <image name="ziti_hover" width="20" height="20"/>
+        <image name="h1_bjq" width="20" height="20"/>
+        <image name="h1_bjq_l" width="20" height="20"/>
+        <image name="h2_bjq" width="20" height="20"/>
+        <image name="h2_bjq_l" width="20" height="20"/>
+        <image name="反撤回_bjq_y" width="20" height="20"/>
+        <image name="图片_bjq" width="20" height="20"/>
+        <image name="撤回_bjq" width="20" height="20"/>
+        <image name="撤回_bjq_y" width="20" height="20"/>
+        <image name="数字序列_bjq" width="20" height="20"/>
+        <image name="数字序列_bjq_l" width="20" height="20"/>
+        <image name="点序列_bjq" width="20" height="20"/>
+        <image name="点序列_bjq_l" width="20" height="20"/>
     </resources>
 </document>

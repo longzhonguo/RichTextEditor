@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB063ADB2595B50B00825194 /* UIFont+fontNameHeavity.m in Sources */ = {isa = PBXBuildFile; fileRef = AB063AD72595B50A00825194 /* UIFont+fontNameHeavity.m */; };
+		AB063ADC2595B50B00825194 /* UIViewExt.m in Sources */ = {isa = PBXBuildFile; fileRef = AB063AD82595B50B00825194 /* UIViewExt.m */; };
+		AB70DCE92595953B00D1EDF1 /* DPCChooseCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB70DCE82595953B00D1EDF1 /* DPCChooseCoverView.m */; };
 		CF4DB42E22C301E100BDA3DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4DB42D22C301E100BDA3DC /* AppDelegate.m */; };
 		CF4DB43122C301E100BDA3DC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4DB43022C301E100BDA3DC /* ViewController.m */; };
 		CF4DB43622C301E200BDA3DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF4DB43522C301E200BDA3DC /* Assets.xcassets */; };
@@ -90,6 +93,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AB063AD72595B50A00825194 /* UIFont+fontNameHeavity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+fontNameHeavity.m"; sourceTree = "<group>"; };
+		AB063AD82595B50B00825194 /* UIViewExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewExt.m; sourceTree = "<group>"; };
+		AB063AD92595B50B00825194 /* UIFont+fontNameHeavity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+fontNameHeavity.h"; sourceTree = "<group>"; };
+		AB063ADA2595B50B00825194 /* UIViewExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewExt.h; sourceTree = "<group>"; };
+		AB70DCE42595949000D1EDF1 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		AB70DCE5259594A100D1EDF1 /* DPConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPConfig.h; sourceTree = "<group>"; };
+		AB70DCE72595953B00D1EDF1 /* DPCChooseCoverView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPCChooseCoverView.h; sourceTree = "<group>"; };
+		AB70DCE82595953B00D1EDF1 /* DPCChooseCoverView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPCChooseCoverView.m; sourceTree = "<group>"; };
 		CF4DB42922C301E100BDA3DC /* VJRichTextEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VJRichTextEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF4DB42C22C301E100BDA3DC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CF4DB42D22C301E100BDA3DC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -196,6 +207,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB063AD62595B50A00825194 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				AB063AD92595B50B00825194 /* UIFont+fontNameHeavity.h */,
+				AB063AD72595B50A00825194 /* UIFont+fontNameHeavity.m */,
+				AB063ADA2595B50B00825194 /* UIViewExt.h */,
+				AB063AD82595B50B00825194 /* UIViewExt.m */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		AB70DCE62595950200D1EDF1 /* 选择封面 */ = {
+			isa = PBXGroup;
+			children = (
+				AB70DCE72595953B00D1EDF1 /* DPCChooseCoverView.h */,
+				AB70DCE82595953B00D1EDF1 /* DPCChooseCoverView.m */,
+			);
+			path = "选择封面";
+			sourceTree = "<group>";
+		};
 		CF4DB42022C301E100BDA3DC = {
 			isa = PBXGroup;
 			children = (
@@ -216,6 +247,10 @@
 		CF4DB42B22C301E100BDA3DC /* VJRichTextEditor */ = {
 			isa = PBXGroup;
 			children = (
+				AB063AD62595B50A00825194 /* Vendor */,
+				AB70DCE62595950200D1EDF1 /* 选择封面 */,
+				AB70DCE5259594A100D1EDF1 /* DPConfig.h */,
+				AB70DCE42595949000D1EDF1 /* PrefixHeader.pch */,
 				CF4DB44222C3023A00BDA3DC /* Source */,
 				CF4DB42C22C301E100BDA3DC /* AppDelegate.h */,
 				CF4DB42D22C301E100BDA3DC /* AppDelegate.m */,
@@ -485,12 +520,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB063ADC2595B50B00825194 /* UIViewExt.m in Sources */,
 				CF6A767323408E3100863373 /* WKWebView+HackishAccessoryHiding.m in Sources */,
 				CF4DB43122C301E100BDA3DC /* ViewController.m in Sources */,
 				CF4DB4E122C3029F00BDA3DC /* RichTextEditorDemo.m in Sources */,
 				CF4DB43C22C301E200BDA3DC /* main.m in Sources */,
 				CF4DB4DB22C3023B00BDA3DC /* NSString+VJUUID.m in Sources */,
+				AB70DCE92595953B00D1EDF1 /* DPCChooseCoverView.m in Sources */,
 				CF4DB4D822C3023B00BDA3DC /* ZSSRichTextEditor.m in Sources */,
+				AB063ADB2595B50B00825194 /* UIFont+fontNameHeavity.m in Sources */,
 				CF4DB49822C3023B00BDA3DC /* KWFontStyleBar.m in Sources */,
 				CF6A767023408E1A00863373 /* WKWebView+VJJSTool.m in Sources */,
 				CF4DB4DC22C3023B00BDA3DC /* UIControl+KWButtonExtension.m in Sources */,
@@ -620,6 +658,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4Q24HAH839;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/VJRichTextEditor/PrefixHeader.pch";
 				INFOPLIST_FILE = VJRichTextEditor/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -638,6 +678,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4Q24HAH839;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/VJRichTextEditor/PrefixHeader.pch";
 				INFOPLIST_FILE = VJRichTextEditor/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (

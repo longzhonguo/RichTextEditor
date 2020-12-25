@@ -13,8 +13,9 @@
 #import "WKWebView+VJJSTool.h"
 #import "WKWebView+HackishAccessoryHiding.h"
 #import "NSString+VJUUID.h"
+#import "DPCChooseCoverView.h"
 
-
+#define EditorHeight 320
 #define pDeviceWidth [UIScreen mainScreen].bounds.size.width
 #define pDeviceHeight [UIScreen mainScreen].bounds.size.height
 //状态栏高度
@@ -29,7 +30,7 @@
 @import JavaScriptCore;
 
 
-@interface ZSSRichTextEditor ()<KWEditorBarDelegate,KWFontStyleBarDelegate,WKNavigationDelegate,WKUIDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate,WKScriptMessageHandler>
+@interface ZSSRichTextEditor ()<KWEditorBarDelegate,KWFontStyleBarDelegate,WKNavigationDelegate,WKUIDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate,WKScriptMessageHandler, UIScrollViewDelegate>
 
 /*
  *  BOOL for holding if the resources are loaded or not
@@ -71,8 +72,10 @@
 @property (nonatomic,strong) KWFontStyleBar *fontBar;
 
 @property(nonatomic,copy)NSString *vj_columnText;
-
-
+@property (nonatomic, assign) CGFloat sjTime;
+@property (nonatomic, strong) UILabel *numInputLab;
+@property (nonatomic, strong) DPCChooseCoverView *coverView;
+@property (nonatomic, strong) UIView *bottomBgV;
 @end
 
 /*
@@ -264,7 +267,10 @@
 - (void)keyBoardWillChangeFrame:(NSNotification*)notification{
     CGRect frame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGFloat duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    self.sjTime = duration;
     if (frame.origin.y == pDeviceHeight) {
+        
+        self.bottomBgV.hidden = NO;
         
         [UIView animateWithDuration:duration animations:^{
             self.toolBarView.transform =  CGAffineTransformIdentity;
@@ -282,16 +288,28 @@
         float height = pDeviceHeight-pStatusBarHeight-pNavigationHeight-self.toolBarView.frame.size.height-frame.size.height;
         [self.editorView setContentHeight: height];
         
-        
+        self.bottomBgV.hidden = YES;
         
         [UIView animateWithDuration:duration animations:^{
-            self.toolBarView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height);
+            self.toolBarView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height+CL_iPhoneXBottomSafeHeight);
             self.toolBarView.keyboardButton.selected = YES;
+            self.editorView.frame = CGRectMake(0, 0, pDeviceWidth, self.view.frame.size.height-KWEditorBar_Height-40-40-CL_iPhoneXBottomSafeHeight);
+            [self reloadBottomView];
         }];
     }
 }
 
-
+- (void)reloadBottomView{
+    [UIView animateWithDuration:self.sjTime animations:^{
+        CGRect rect = self.numInputLab.frame;
+        rect.origin.y = self.editorView.bottom;
+        self.numInputLab.frame = rect;
+        
+        CGRect rect1 = self.coverView.frame;
+        rect1.origin.y = self.editorView.bottom+40;
+        self.coverView.frame = rect1;
+    }];
+}
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
 
@@ -659,6 +677,35 @@
     }
 }
 
+#pragma mark - scrollview的代理
+
+- (void)scrollViewDidEndDragging:(UIScrollView*)scrollView willDecelerate:(BOOL)decelerate{
+    [self dismissKeyboard];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    [self dismissKeyboard];
+    // 判断scrollView是否已划到底了
+    if (fabs(scrollView.contentSize.height - scrollView.frame.size.height - scrollView.contentOffset.y) < scrollView.contentSize.height * 0.2) {
+          NSLog(@"++++++++++");
+        
+//        [self smallEditorView];
+    }
+}
+
+- (void)smallEditorView{
+    // self.wkwebView 高度改变
+    [UIView animateWithDuration:self.sjTime animations:^{
+        CGRect rect = self.editorView.frame;
+        rect.size.height = EditorHeight;//EditorHeight是self.wkwebView的高度
+        self.editorView.frame = rect;
+        [self reloadBottomView];
+    } completion:^(BOOL finished) {
+        //self.wkwebView 高度改变后, 自动滚动到底部
+        [self.editorView.scrollView setContentOffset:CGPointMake(0, self.editorView.scrollView.contentSize.height-EditorHeight)]; //EditorHeight是self.wkwebView的高度
+    }];
+}
+
 -(void)didSelectedColumn{
     //需要重写
 }
@@ -717,10 +764,46 @@
 
 
 #pragma mark - setter
+- (UIView *)bottomBgV{
+    if (!_bottomBgV) {
+        _bottomBgV = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-CL_iPhoneXBottomSafeHeight, SCREEN_W, CL_iPhoneXBottomSafeHeight)];
+        _bottomBgV.backgroundColor = UIColor.whiteColor;
+        _bottomBgV.hidden = NO;
+    }
+    return _bottomBgV;
+}
+
+- (UILabel *)numInputLab{
+    if (!_numInputLab) {
+        _numInputLab = [[UILabel alloc] initWithFrame:CGRectMake(16, self.editorView.bottom, SCREEN_W-32, 20)];
+        _numInputLab.font = [UIFont getPingFangSCFontRegularWithSize:14];
+        _numInputLab.textColor = UIColorFromRGBA(0xD1D3D5, 1);
+        _numInputLab.text = @"最多可以输入2000个字哦";
+        _numInputLab.textAlignment = NSTextAlignmentRight;
+    }
+    return _numInputLab;
+}
+
+- (DPCChooseCoverView *)coverView{
+    if (!_coverView) {
+        _coverView = [[DPCChooseCoverView alloc] initWithFrame:CGRectMake(0, self.numInputLab.bottom+20, SCREEN_W, SCREEN_H)];
+        _coverView.userInteractionEnabled = YES;
+        [_coverView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickCoverView)]];
+    }
+    return _coverView;
+}
+
+- (void)clickCoverView{
+    [self dismissKeyboard];
+    [self smallEditorView];
+}
 
 -(void)initConfig{
     
     [self.view addSubview:self.editorView];
+    [self.view addSubview:self.numInputLab];
+    [self.view addSubview:self.coverView];
+    [self.view addSubview:self.bottomBgV];
     
     //Load Resources
     if (!self.resourcesLoaded) {
@@ -739,13 +822,15 @@
         WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc]init];
         WKUserContentController *userCon = [[WKUserContentController alloc]init];
         config.userContentController = userCon;
-        _editorView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, pDeviceWidth, self.view.frame.size.height-KWEditorBar_Height-40) configuration:config];
+        //self.view.frame.size.height-KWEditorBar_Height-40
+        _editorView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, pDeviceWidth, EditorHeight) configuration:config];
         [userCon addScriptMessageHandler:self name:@"column"];
         _editorView.navigationDelegate = self;
         _editorView.UIDelegate = self;
+        _editorView.scrollView.delegate = self;
         _editorView.hidesInputAccessoryView = YES;
-        _editorView.scrollView.bounces = NO;
-        _editorView.backgroundColor = [UIColor greenColor];
+        _editorView.scrollView.bounces = YES;
+        _editorView.backgroundColor = [UIColor whiteColor];
         [_editorView addObserver:self forKeyPath:@"URL" options:NSKeyValueObservingOptionNew context:nil];
     }
     return _editorView;
@@ -754,7 +839,7 @@
 - (KWEditorBar *)toolBarView{
     if (!_toolBarView) {
         _toolBarView = [KWEditorBar editorBar];
-        _toolBarView.frame = CGRectMake(0,self.view.frame.size.height - KWEditorBar_Height, self.view.frame.size.width, KWEditorBar_Height);
+        _toolBarView.frame = CGRectMake(0,self.view.frame.size.height - KWEditorBar_Height-CL_iPhoneXBottomSafeHeight, self.view.frame.size.width, KWEditorBar_Height);
         _toolBarView.backgroundColor = COLOR(237, 237, 237, 1);
     }
     return _toolBarView;

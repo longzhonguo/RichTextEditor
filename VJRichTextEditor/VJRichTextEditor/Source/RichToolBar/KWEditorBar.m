@@ -15,7 +15,6 @@
 
 - (void)awakeFromNib{
     [super awakeFromNib];
-    [self.H1Button setImage:[UIImage imageNamed:@"Aalhover"] forState:UIControlStateSelected];
 }
 
 - (CALayer *)topline{
