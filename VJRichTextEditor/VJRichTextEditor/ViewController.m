@@ -12,6 +12,7 @@
 
 @interface ViewController ()<UIScrollViewDelegate>
 @property (nonatomic, strong) DPCCustomScrollView *scrollV;
+@property (nonatomic, strong) RichTextEditorDemo *demoVC;
 @end
 
 @implementation ViewController
@@ -28,17 +29,21 @@
 //
 //    [self performSelector:@selector(btnAction)];
     self.scrollV = [[DPCCustomScrollView alloc] initWithFrame:self.view.frame];
-    self.scrollV.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 0);
-    self.scrollV.contentOffset = CGPointMake([UIScreen mainScreen].bounds.size.width, 0);
-    self.scrollV.pagingEnabled = YES;
+    self.scrollV.contentSize = CGSizeMake(SCREEN_W, SCREEN_H*2);
+//    self.scrollV.contentOffset = CGPointMake([UIScreen mainScreen].bounds.size.width, 0);
+//    self.scrollV.pagingEnabled = YES;
     self.scrollV.delegate = self;
     self.scrollV.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.scrollV];
+    
+    self.demoVC = [[RichTextEditorDemo alloc]init];
+    [self addChildViewController:self.demoVC];
+    [self.scrollV addSubview:self.demoVC.view];
+//    [self didMoveToParentViewController:self];
 }
 
--(void)btnAction{
-    RichTextEditorDemo *vc = [[RichTextEditorDemo alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.scrollV setContentOffset:CGPointZero];
 }
 
 

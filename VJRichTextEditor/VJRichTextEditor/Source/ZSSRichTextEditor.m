@@ -679,17 +679,36 @@
 
 #pragma mark - scrollview的代理
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    CLog(@"%f", scrollView.contentOffset.y);
+//    if (scrollView.contentOffset.y>self.editorView.) {
+//        statements
+//    }
+}
+
 - (void)scrollViewDidEndDragging:(UIScrollView*)scrollView willDecelerate:(BOOL)decelerate{
     [self dismissKeyboard];
+    CLog(@">>>%f",scrollView.contentOffset.y);
+    CLog(@">>>%f",self.editorView.frame.size.height);
+    CLog(@">>>%f",scrollView.contentSize.height);
+    if (scrollView.contentOffset.y != 0 && scrollView.contentOffset.y + self.editorView.frame.size.height >= scrollView.contentSize.height) {
+        NSLog(@"======");
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     [self dismissKeyboard];
+    CLog(@"<<<%f",scrollView.contentOffset.y);
+    CLog(@"<<<%f",self.editorView.frame.size.height);
+    CLog(@"<<<%f",scrollView.contentSize.height);
     // 判断scrollView是否已划到底了
-    if (fabs(scrollView.contentSize.height - scrollView.frame.size.height - scrollView.contentOffset.y) < scrollView.contentSize.height * 0.2) {
+    if (scrollView.contentOffset.y != 0 && fabs(scrollView.contentSize.height - scrollView.frame.size.height - scrollView.contentOffset.y) < scrollView.contentSize.height * 0.2) {
           NSLog(@"++++++++++");
         
 //        [self smallEditorView];
+    }
+    if (scrollView.contentOffset.y != 0 && scrollView.contentOffset.y + self.editorView.frame.size.height >= scrollView.contentSize.height) {
+        NSLog(@"======");
     }
 }
 
@@ -829,7 +848,7 @@
         _editorView.UIDelegate = self;
         _editorView.scrollView.delegate = self;
         _editorView.hidesInputAccessoryView = YES;
-        _editorView.scrollView.bounces = YES;
+        _editorView.scrollView.bounces = NO;
         _editorView.backgroundColor = [UIColor whiteColor];
         [_editorView addObserver:self forKeyPath:@"URL" options:NSKeyValueObservingOptionNew context:nil];
     }

@@ -32,4 +32,10 @@ isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bo
 #define CL_StatusBarHeight      (IPHONE_X ? 44.f : 20.f)
 #define CL_iPhoneXBottomSafeHeight   (IPHONE_X ? 34:0)
 
+#ifdef DEBUG
+#define CLog(format, ...) printf("\n[%s] %s [第%d行] %s\n", __TIME__, __FUNCTION__, __LINE__, [[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]);
+#else
+#define CLog(format, ...)
+#endif
+
 #endif /* DPConfig_h */
