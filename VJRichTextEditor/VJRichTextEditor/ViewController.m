@@ -10,6 +10,8 @@
 #import "RichTextEditorDemo.h"
 #import "DPCCustomScrollView.h"
 
+#define EditorHeight 320
+
 @interface ViewController ()<UIScrollViewDelegate>
 @property (nonatomic, strong) DPCCustomScrollView *scrollV;
 @property (nonatomic, strong) RichTextEditorDemo *demoVC;
@@ -20,22 +22,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+//    RichTextEditorDemo *vc = [[RichTextEditorDemo alloc] init];
+//    [self.navigationController pushViewController:vc animated:YES];
+    
 //    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
 //    btn.frame = CGRectMake(100, 100, 100, 60);
 //    [btn setTitle:@"测试" forState:UIControlStateNormal];
 //    btn.backgroundColor = [UIColor cyanColor];
 //    [btn addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
 //    [self.view addSubview:btn];
-//
-//    [self performSelector:@selector(btnAction)];
-    self.scrollV = [[DPCCustomScrollView alloc] initWithFrame:self.view.frame];
-    self.scrollV.contentSize = CGSizeMake(SCREEN_W, SCREEN_H*2);
+
+    self.scrollV = [[DPCCustomScrollView alloc] initWithFrame:CGRectMake(0, LL_StatusBarAndNavigationBarHeight, SCREEN_W, SCREEN_H)];
+    self.scrollV.contentSize = CGSizeMake(SCREEN_W, EditorHeight+414+44+LL_StatusBarAndNavigationBarHeight);
 //    self.scrollV.contentOffset = CGPointMake([UIScreen mainScreen].bounds.size.width, 0);
 //    self.scrollV.pagingEnabled = YES;
     self.scrollV.delegate = self;
+    self.scrollV.bounces = NO;
+    self.scrollV.showsVerticalScrollIndicator = NO;
     self.scrollV.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.scrollV];
-    
+
     self.demoVC = [[RichTextEditorDemo alloc]init];
     [self addChildViewController:self.demoVC];
     [self.scrollV addSubview:self.demoVC.view];
@@ -43,7 +49,11 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [self.scrollV setContentOffset:CGPointZero];
+    if (self.demoVC.isEditorScrollEnd) {
+        [self.scrollV setContentOffset:scrollView.contentOffset];
+    }else{
+        [self.scrollV setContentOffset:CGPointZero];
+    }
 }
 
 

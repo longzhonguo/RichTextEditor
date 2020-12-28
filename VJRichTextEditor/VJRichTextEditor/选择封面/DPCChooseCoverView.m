@@ -124,7 +124,7 @@
     aLabel3.font = [UIFont getPingFangSCFontRegularWithSize:12];
     aLabel3.textAlignment = NSTextAlignmentRight;
     aLabel3.textColor = UIColorFromRGBA(0xA3A8AB, 1);
-    aLabel3.backgroundColor = [UIColor greenColor];
+    aLabel3.backgroundColor = [UIColor clearColor];
     aLabel3.userInteractionEnabled = YES;
     [aLabel3 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addBiaoQian)]];
     [self addSubview:aLabel3];

@@ -30,7 +30,7 @@
 @import JavaScriptCore;
 
 
-@interface ZSSRichTextEditor ()<KWEditorBarDelegate,KWFontStyleBarDelegate,WKNavigationDelegate,WKUIDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate,WKScriptMessageHandler, UIScrollViewDelegate>
+@interface ZSSRichTextEditor ()<KWEditorBarDelegate,KWFontStyleBarDelegate,WKNavigationDelegate,WKUIDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate,WKScriptMessageHandler, UIScrollViewDelegate, UIWebViewDelegate>
 
 /*
  *  BOOL for holding if the resources are loaded or not
@@ -90,6 +90,7 @@
     
     [super viewDidLoad];
     self.formatHTML = YES;
+    self.isEditorScrollEnd = YES;
     self.view.backgroundColor = [UIColor whiteColor];
     [self initConfig];
     
@@ -284,7 +285,6 @@
             
         }];
     }else{
-        
         float height = pDeviceHeight-pStatusBarHeight-pNavigationHeight-self.toolBarView.frame.size.height-frame.size.height;
         [self.editorView setContentHeight: height];
         
@@ -293,8 +293,11 @@
         [UIView animateWithDuration:duration animations:^{
             self.toolBarView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height+CL_iPhoneXBottomSafeHeight);
             self.toolBarView.keyboardButton.selected = YES;
-            self.editorView.frame = CGRectMake(0, 0, pDeviceWidth, self.view.frame.size.height-KWEditorBar_Height-40-40-CL_iPhoneXBottomSafeHeight);
+            self.isEditorScrollEnd = NO;
+            self.editorView.frame = CGRectMake(0, 0, pDeviceWidth, SCREEN_H-KWEditorBar_Height-40-40-CL_iPhoneXBottomSafeHeight-LL_StatusBarAndNavigationBarHeight);
             [self reloadBottomView];
+        } completion:^(BOOL finished) {
+            
         }];
     }
 }
@@ -311,7 +314,22 @@
     }];
 }
 
+- (void)reloadEditorViewWithNewHeith:(CGFloat)newHeight{
+    if (newHeight<=0) {
+        return;
+    }
+    CGRect rect = self.editorView.frame;
+    rect.size.height = newHeight;
+    self.editorView.frame = rect;
+}
+
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
+//    //根据内容的高重置webView视图的高度
+//    NSLog(@"Height is changed! new=%@", [change valueForKey:NSKeyValueChangeNewKey]);
+//    NSLog(@"tianxia :%@",NSStringFromCGSize(self.editorView.scrollView.contentSize));
+//    CGFloat newHeight = self.editorView.scrollView.contentSize.height;
+//    [self reloadEditorViewWithNewHeith:newHeight];
+    
 
     if([keyPath isEqualToString:@"transform"]){
         
@@ -627,6 +645,14 @@
 
 }
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    CGSize actualSize = [webView sizeThatFits:CGSizeZero];
+
+    CGRect newFrame =  webView.frame;
+    newFrame.size.height = actualSize.height;
+    webView.frame = newFrame;
+}
+
 #pragma mark - WKUIDelegate
 // 显示一个按钮。点击后调用completionHandler回调
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
@@ -681,6 +707,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CLog(@"%f", scrollView.contentOffset.y);
+    
 //    if (scrollView.contentOffset.y>self.editorView.) {
 //        statements
 //    }
@@ -693,6 +720,7 @@
     CLog(@">>>%f",scrollView.contentSize.height);
     if (scrollView.contentOffset.y != 0 && scrollView.contentOffset.y + self.editorView.frame.size.height >= scrollView.contentSize.height) {
         NSLog(@"======");
+//        self.isEditorScrollEnd = YES;
     }
 }
 
@@ -704,7 +732,7 @@
     // 判断scrollView是否已划到底了
     if (scrollView.contentOffset.y != 0 && fabs(scrollView.contentSize.height - scrollView.frame.size.height - scrollView.contentOffset.y) < scrollView.contentSize.height * 0.2) {
           NSLog(@"++++++++++");
-        
+//        self.isEditorScrollEnd = YES;
 //        [self smallEditorView];
     }
     if (scrollView.contentOffset.y != 0 && scrollView.contentOffset.y + self.editorView.frame.size.height >= scrollView.contentSize.height) {
@@ -813,6 +841,7 @@
 }
 
 - (void)clickCoverView{
+    self.isEditorScrollEnd = YES;
     [self dismissKeyboard];
     [self smallEditorView];
 }
@@ -829,7 +858,7 @@
         [self loadResources];
     }
     
-    [self.view addSubview:self.toolBarView];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.toolBarView];
     self.toolBarView.delegate = self;
     [self.toolBarView addObserver:self forKeyPath:@"transform" options:
      NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
@@ -837,7 +866,6 @@
 
 -(WKWebView *)editorView{
     if (!_editorView) {
-        
         WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc]init];
         WKUserContentController *userCon = [[WKUserContentController alloc]init];
         config.userContentController = userCon;
@@ -851,6 +879,7 @@
         _editorView.scrollView.bounces = NO;
         _editorView.backgroundColor = [UIColor whiteColor];
         [_editorView addObserver:self forKeyPath:@"URL" options:NSKeyValueObservingOptionNew context:nil];
+//        [_editorView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
     }
     return _editorView;
 }

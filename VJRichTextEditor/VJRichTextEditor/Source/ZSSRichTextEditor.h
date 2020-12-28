@@ -16,6 +16,8 @@
 
 typedef void (^callBack)(NSString *html);
 
+@property (nonatomic, assign) BOOL isEditorScrollEnd; // editorview是否滚动到底部
+
 
 /*
  *  WKWebView for writing/editing/displaying the content
