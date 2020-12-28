@@ -15,9 +15,9 @@
 @interface ZSSRichTextEditor : UIViewController
 
 typedef void (^callBack)(NSString *html);
-
 @property (nonatomic, assign) BOOL isEditorScrollEnd; // editorview是否滚动到底部
-
+@property (nonatomic, weak) UIScrollView *superScrollView;
+@property (nonatomic, assign) CGFloat superScrollOffsetH;
 
 /*
  *  WKWebView for writing/editing/displaying the content

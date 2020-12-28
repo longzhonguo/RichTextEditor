@@ -116,17 +116,20 @@ zss_editor.calculateEditorHeightWithCaretPosition = function() {
             var a = offsetY + height - c;
             
             if(a>0 && a<lineHeight){
+//                alert("弹窗~~~1");
                 var pos = c - height + lineHeight;
                 window.scrollTo(0, pos);
             }else if(c >= offsetY + height){
-                var pos = c - height + lineHeight;
+//                alert("弹窗~~~2");
+                var pos = c - height + lineHeight + 100;
                 window.scrollTo(0, pos);
             }else{
                 if(zss_editor.touchbegin == true){
+//                    alert("弹窗~~~3");
                     
                     zss_editor.touchbegin = false;
                     
-                    var pos = c - height + lineHeight;
+                    var pos = c - height + lineHeight + 100;
                     window.scrollTo(0, pos);
                 }
             }

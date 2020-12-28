@@ -45,9 +45,9 @@
     }];
     
     
-//    [self getText:^(NSString *html) {
-//        NSLog(@"文本格式 :\n %@",html);
-//    }];
+    [self getText:^(NSString *html) {
+        NSLog(@"文本格式 :\n %@",html);
+    }];
     
     
 }

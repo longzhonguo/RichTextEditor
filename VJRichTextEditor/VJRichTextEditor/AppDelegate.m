@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 
+#define App_Delegate      ((AppDelegate*)[[UIApplication sharedApplication]delegate])
+
 @interface AppDelegate ()
 
 @end

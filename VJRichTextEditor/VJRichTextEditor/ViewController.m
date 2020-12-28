@@ -32,7 +32,7 @@
 //    [btn addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
 //    [self.view addSubview:btn];
 
-    self.scrollV = [[DPCCustomScrollView alloc] initWithFrame:CGRectMake(0, LL_StatusBarAndNavigationBarHeight, SCREEN_W, SCREEN_H)];
+    self.scrollV = [[DPCCustomScrollView alloc] initWithFrame:CGRectMake(0, LL_StatusBarAndNavigationBarHeight, SCREEN_W, SCREEN_H-LL_StatusBarAndNavigationBarHeight-CL_iPhoneXBottomSafeHeight)];
     self.scrollV.contentSize = CGSizeMake(SCREEN_W, EditorHeight+414+44+LL_StatusBarAndNavigationBarHeight);
 //    self.scrollV.contentOffset = CGPointMake([UIScreen mainScreen].bounds.size.width, 0);
 //    self.scrollV.pagingEnabled = YES;
@@ -43,17 +43,22 @@
     [self.view addSubview:self.scrollV];
 
     self.demoVC = [[RichTextEditorDemo alloc]init];
+    self.demoVC.superScrollView = self.scrollV;
     [self addChildViewController:self.demoVC];
     [self.scrollV addSubview:self.demoVC.view];
 //    [self didMoveToParentViewController:self];
+
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (self.demoVC.isEditorScrollEnd) {
         [self.scrollV setContentOffset:scrollView.contentOffset];
+        self.scrollV.contentSize = CGSizeMake(SCREEN_W, self.demoVC.editorView.height+414+44+LL_StatusBarAndNavigationBarHeight);
+        [self.demoVC dismissKeyboard];
     }else{
         [self.scrollV setContentOffset:CGPointZero];
     }
+    self.demoVC.superScrollOffsetH = scrollView.contentOffset.y;
 }
 
 

@@ -33,6 +33,12 @@ isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bo
 #define CL_iPhoneXBottomSafeHeight   (IPHONE_X ? 34:0)
 #define  LL_StatusBarAndNavigationBarHeight  (IPHONE_X ? 88.f : 64.f)
 
+//weak && strong
+#define WS(weakSelf)                      __weak __typeof(&*self)weakSelf = self;
+#define SS(strongSelf)                    __strong __typeof(&*self)strongSelf = weakSelf;
+#define WD(NP, OP)                      __weak __typeof(&*OP)NP = OP;
+#define SD(NP, OP)                      __strong __typeof(&*OP)NP = OP;
+
 #ifdef DEBUG
 #define CLog(format, ...) printf("\n[%s] %s [第%d行] %s\n", __TIME__, __FUNCTION__, __LINE__, [[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]);
 #else

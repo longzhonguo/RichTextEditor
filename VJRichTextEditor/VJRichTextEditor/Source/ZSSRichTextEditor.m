@@ -109,6 +109,11 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+//    CLog(@"webview的内容高度是%f",self.editorView.scrollView.contentSize.height);
+}
+
 
 -(void)dealloc{
     [self removeNotification];
@@ -270,12 +275,13 @@
     CGFloat duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     self.sjTime = duration;
     if (frame.origin.y == pDeviceHeight) {
-        
+        // 键盘落下
         self.bottomBgV.hidden = NO;
         
         [UIView animateWithDuration:duration animations:^{
             self.toolBarView.transform =  CGAffineTransformIdentity;
             self.toolBarView.keyboardButton.selected = NO;
+            [self refreshEditorViewWithMaxHeight];
             
             static int a = 0;
             if (a != 0) {
@@ -285,6 +291,7 @@
             
         }];
     }else{
+        // 键盘抬起
         float height = pDeviceHeight-pStatusBarHeight-pNavigationHeight-self.toolBarView.frame.size.height-frame.size.height;
         [self.editorView setContentHeight: height];
         
@@ -293,11 +300,25 @@
         [UIView animateWithDuration:duration animations:^{
             self.toolBarView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height+CL_iPhoneXBottomSafeHeight);
             self.toolBarView.keyboardButton.selected = YES;
-            self.isEditorScrollEnd = NO;
-            self.editorView.frame = CGRectMake(0, 0, pDeviceWidth, SCREEN_H-KWEditorBar_Height-40-40-CL_iPhoneXBottomSafeHeight-LL_StatusBarAndNavigationBarHeight);
-            [self reloadBottomView];
+            if (self.editorView.scrollView.contentSize.height > EditorHeight) {
+                self.isEditorScrollEnd = NO;
+            }else{
+                self.isEditorScrollEnd = YES;
+            }
+//            if (self.wakeupKeyboard) {
+//                self.wakeupKeyboard();
+//            }
+//            self.editorView.frame = CGRectMake(0, 0, pDeviceWidth, SCREEN_H-KWEditorBar_Height-40-20-8-CL_iPhoneXBottomSafeHeight-LL_StatusBarAndNavigationBarHeight);
+//            [self reloadBottomView];
+            [self refreshEditorViewWithFixedHeight];
         } completion:^(BOOL finished) {
-            
+            CLog(@"偏移量%f", self.superScrollOffsetH);
+            if (self.superScrollOffsetH > 0) {
+    //            CGRect rect = self.editorView.frame;
+    //            rect.origin.y = 0;
+    //            self.editorView.frame = rect;
+                [self.superScrollView setContentOffset:CGPointZero animated:NO];
+            }
         }];
     }
 }
@@ -309,9 +330,34 @@
         self.numInputLab.frame = rect;
         
         CGRect rect1 = self.coverView.frame;
-        rect1.origin.y = self.editorView.bottom+40;
+        rect1.origin.y = self.editorView.bottom+20+8;
         self.coverView.frame = rect1;
     }];
+}
+
+// 键盘弹起时, 展示editorview的固定高度
+- (void)refreshEditorViewWithFixedHeight{
+    CGRect rect = self.editorView.frame;
+    rect.size.height = EditorHeight;
+    self.editorView.frame = rect;
+    
+    [self reloadBottomView];
+}
+
+// 键盘落下时, 展示editorview的最大高度
+- (void)refreshEditorViewWithMaxHeight{
+    CGFloat maxheight = SCREEN_H-LL_StatusBarAndNavigationBarHeight-CL_iPhoneXBottomSafeHeight-44-8-20;
+    CGRect rect = self.editorView.frame;
+    if (self.editorView.scrollView.contentSize.height > maxheight) {
+        rect.size.height = maxheight;
+    }else if (self.editorView.scrollView.contentSize.height > EditorHeight) {
+        rect.size.height = self.editorView.scrollView.contentSize.height;
+    }else{
+        rect.size.height = EditorHeight;
+    }
+    self.editorView.frame = rect;
+    
+    [self reloadBottomView];
 }
 
 - (void)reloadEditorViewWithNewHeith:(CGFloat)newHeight{
@@ -319,16 +365,18 @@
         return;
     }
     CGRect rect = self.editorView.frame;
-    rect.size.height = newHeight;
+//    rect.size.height = newHeight;
     self.editorView.frame = rect;
+    
+    [self reloadBottomView];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
-//    //根据内容的高重置webView视图的高度
-//    NSLog(@"Height is changed! new=%@", [change valueForKey:NSKeyValueChangeNewKey]);
-//    NSLog(@"tianxia :%@",NSStringFromCGSize(self.editorView.scrollView.contentSize));
-//    CGFloat newHeight = self.editorView.scrollView.contentSize.height;
-//    [self reloadEditorViewWithNewHeith:newHeight];
+    //根据内容的高重置webView视图的高度
+    NSLog(@"Height is changed! new=%@", [change valueForKey:NSKeyValueChangeNewKey]);
+    NSLog(@"tianxia :%@",NSStringFromCGSize(self.editorView.scrollView.contentSize));
+    CGFloat newHeight = self.editorView.scrollView.contentSize.height;
+    [self reloadEditorViewWithNewHeith:newHeight];
     
 
     if([keyPath isEqualToString:@"transform"]){
@@ -695,8 +743,7 @@
 
 #pragma mark - WKScriptMessageHandler
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message{
-    
-    NSLog(@"name  = %@",message.name);
+    CLog(@"userContentController >> name = %@, body = %@", message.name, message.body);
     //在这里截取H5调用的本地方法
     if ([message.name isEqualToString:@"column"]){
         [self didSelectedColumn];
@@ -706,51 +753,57 @@
 #pragma mark - scrollview的代理
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    CLog(@"%f", scrollView.contentOffset.y);
+    CLog(@"WebView滚动了>>>%f", scrollView.contentOffset.y);
     
-//    if (scrollView.contentOffset.y>self.editorView.) {
-//        statements
-//    }
+    if (scrollView.contentOffset.y+self.editorView.height>=self.editorView.scrollView.contentSize.height || scrollView.contentOffset.y <= 0) {
+        self.isEditorScrollEnd = YES;
+    }else{
+        self.isEditorScrollEnd = NO;
+    }
+    
+//    [self refreshEditorViewWithFixedHeight];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView*)scrollView willDecelerate:(BOOL)decelerate{
     [self dismissKeyboard];
+    self.isEditorScrollEnd = YES;
     CLog(@">>>%f",scrollView.contentOffset.y);
     CLog(@">>>%f",self.editorView.frame.size.height);
     CLog(@">>>%f",scrollView.contentSize.height);
-    if (scrollView.contentOffset.y != 0 && scrollView.contentOffset.y + self.editorView.frame.size.height >= scrollView.contentSize.height) {
-        NSLog(@"======");
-//        self.isEditorScrollEnd = YES;
-    }
+//    if (scrollView.contentOffset.y != 0 && scrollView.contentOffset.y + self.editorView.frame.size.height >= scrollView.contentSize.height) {
+//        NSLog(@"======");
+////        self.isEditorScrollEnd = YES;
+//    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     [self dismissKeyboard];
+    self.isEditorScrollEnd = YES;
     CLog(@"<<<%f",scrollView.contentOffset.y);
     CLog(@"<<<%f",self.editorView.frame.size.height);
     CLog(@"<<<%f",scrollView.contentSize.height);
-    // 判断scrollView是否已划到底了
-    if (scrollView.contentOffset.y != 0 && fabs(scrollView.contentSize.height - scrollView.frame.size.height - scrollView.contentOffset.y) < scrollView.contentSize.height * 0.2) {
-          NSLog(@"++++++++++");
-//        self.isEditorScrollEnd = YES;
-//        [self smallEditorView];
-    }
-    if (scrollView.contentOffset.y != 0 && scrollView.contentOffset.y + self.editorView.frame.size.height >= scrollView.contentSize.height) {
-        NSLog(@"======");
-    }
+//    // 判断scrollView是否已划到底了
+//    if (scrollView.contentOffset.y != 0 && fabs(scrollView.contentSize.height - scrollView.frame.size.height - scrollView.contentOffset.y) < scrollView.contentSize.height * 0.2) {
+//          NSLog(@"++++++++++");
+////        self.isEditorScrollEnd = YES;
+////        [self smallEditorView];
+//    }
+//    if (scrollView.contentOffset.y != 0 && scrollView.contentOffset.y + self.editorView.frame.size.height >= scrollView.contentSize.height) {
+//        NSLog(@"======");
+//    }
 }
 
 - (void)smallEditorView{
-    // self.wkwebView 高度改变
-    [UIView animateWithDuration:self.sjTime animations:^{
-        CGRect rect = self.editorView.frame;
-        rect.size.height = EditorHeight;//EditorHeight是self.wkwebView的高度
-        self.editorView.frame = rect;
-        [self reloadBottomView];
-    } completion:^(BOOL finished) {
-        //self.wkwebView 高度改变后, 自动滚动到底部
-        [self.editorView.scrollView setContentOffset:CGPointMake(0, self.editorView.scrollView.contentSize.height-EditorHeight)]; //EditorHeight是self.wkwebView的高度
-    }];
+//    // self.wkwebView 高度改变
+//    [UIView animateWithDuration:self.sjTime animations:^{
+//        CGRect rect = self.editorView.frame;
+//        rect.size.height = EditorHeight;//EditorHeight是self.wkwebView的高度
+//        self.editorView.frame = rect;
+//        [self reloadBottomView];
+//    } completion:^(BOOL finished) {
+//        //self.wkwebView 高度改变后, 自动滚动到底部
+//        [self.editorView.scrollView setContentOffset:CGPointMake(0, self.editorView.scrollView.contentSize.height-EditorHeight)]; //EditorHeight是self.wkwebView的高度
+//    }];
 }
 
 -(void)didSelectedColumn{
@@ -833,7 +886,7 @@
 
 - (DPCChooseCoverView *)coverView{
     if (!_coverView) {
-        _coverView = [[DPCChooseCoverView alloc] initWithFrame:CGRectMake(0, self.numInputLab.bottom+20, SCREEN_W, SCREEN_H)];
+        _coverView = [[DPCChooseCoverView alloc] initWithFrame:CGRectMake(0, self.numInputLab.bottom+8, SCREEN_W, SCREEN_H)];
         _coverView.userInteractionEnabled = YES;
         [_coverView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickCoverView)]];
     }
@@ -841,9 +894,9 @@
 }
 
 - (void)clickCoverView{
-    self.isEditorScrollEnd = YES;
-    [self dismissKeyboard];
-    [self smallEditorView];
+//    self.isEditorScrollEnd = YES;
+//    [self dismissKeyboard];
+//    [self smallEditorView];
 }
 
 -(void)initConfig{
@@ -879,7 +932,8 @@
         _editorView.scrollView.bounces = NO;
         _editorView.backgroundColor = [UIColor whiteColor];
         [_editorView addObserver:self forKeyPath:@"URL" options:NSKeyValueObservingOptionNew context:nil];
-//        [_editorView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
+        [_editorView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
+//        [[_editorView configuration].userContentController addScriptMessageHandler:self name:@"getMessage"];
     }
     return _editorView;
 }
