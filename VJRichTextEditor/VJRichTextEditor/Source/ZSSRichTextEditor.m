@@ -360,31 +360,19 @@
     [self reloadBottomView];
 }
 
-- (void)reloadEditorViewWithNewHeith:(CGFloat)newHeight{
-    if (newHeight<=0) {
-        return;
-    }
-    CGRect rect = self.editorView.frame;
-//    rect.size.height = newHeight;
-    self.editorView.frame = rect;
-    
-    [self reloadBottomView];
-}
+//- (void)reloadEditorViewWithNewHeith:(CGFloat)newHeight{
+//    if (newHeight<=0) {
+//        return;
+//    }
+//    CGRect rect = self.editorView.frame;
+////    rect.size.height = newHeight;
+//    self.editorView.frame = rect;
+//
+//    [self reloadBottomView];
+//}
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
-    //根据内容的高重置webView视图的高度
-    NSLog(@"Height is changed! new=%@", [change valueForKey:NSKeyValueChangeNewKey]);
-    NSLog(@"tianxia :%@",NSStringFromCGSize(self.editorView.scrollView.contentSize));
-    CGFloat newHeight = self.editorView.scrollView.contentSize.height;
-    [self reloadEditorViewWithNewHeith:newHeight];
-    
-    [self getText:^(NSString *html) {
-        CLog(@"当前文本是:%@", html);
-    }];
-    
-
     if([keyPath isEqualToString:@"transform"]){
-        
         CGRect fontBarFrame = self.fontBar.frame;
         fontBarFrame.origin.y = CGRectGetMaxY(self.toolBarView.frame)- KWFontBar_Height - KWEditorBar_Height;
         self.fontBar.frame = fontBarFrame;
@@ -394,6 +382,32 @@
         [self handleEvent:urlString];
     }else{
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+    
+    //根据内容的高重置webView视图的高度
+//    NSLog(@"Height is changed! new=%@", [change valueForKey:NSKeyValueChangeNewKey]);
+//    NSLog(@"tianxia :%@",NSStringFromCGSize(self.editorView.scrollView.contentSize));
+//    CGFloat newHeight = self.editorView.scrollView.contentSize.height;
+//    [self reloadEditorViewWithNewHeith:newHeight];
+    
+    WS(weakSelf);
+    [self getText:^(NSString *html) {
+        CLog(@"当前文本是:%@", html);
+        [weakSelf refreshNumLableWithString:html];
+    }];
+    
+
+}
+
+- (void)refreshNumLableWithString:(NSString *)inputStr{
+    NSString *str = @"最多可以输入2000个字哦";
+    int num = (int)inputStr.length;
+    if (num == 0) {
+        self.numInputLab.text = str;
+    }else if (num <= 200) {
+        self.numInputLab.text = [NSString stringWithFormat:@"%d", num];
+    }else{
+        self.numInputLab.text = [NSString stringWithFormat:@"已超过%d个字", num-200];
     }
 }
 
@@ -703,6 +717,60 @@
     CGRect newFrame =  webView.frame;
     newFrame.size.height = actualSize.height;
     webView.frame = newFrame;
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    
+    NSString *requestString = [[[request URL] absoluteString]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"requestString : %@",requestString);
+    
+    
+    NSArray *components = [requestString componentsSeparatedByString:@"|"];
+    NSLog(@"=components=====%@",components);
+    
+    
+    NSString *str1 = [components objectAtIndex:0];
+    NSLog(@"str1:::%@",str1);
+    
+    
+    NSArray *array2 = [str1 componentsSeparatedByString:@"/"];
+    NSLog(@"array2:====%@",array2);
+    
+    
+    NSInteger coun = array2.count;
+    NSString *method = array2[coun-1];
+    NSLog(@"method:===%@",method);
+    
+    if ([method isEqualToString:@"InviteBtn1"])//查看详情，其中红色部分是HTML5跟咱们约定好的，相应H5上的按钮的点击事件后，H5发送超链接，客户端一旦收到这个超链接信号。把其中的点击按钮的约定的信号标示符截取出来跟本地的标示符来进行匹配，如果匹配成功，那么就执行相应的操作，详情见如下所示。
+    {
+//        UZGCustomAlertView *vc= [[UZGCustomAlertView alloc]initWithTitle:self.detailTitle];
+//        vc.showImage = NO;
+//        [vc show];
+        return NO;
+    }else if ([method isEqualToString:@"InviteBtn2"])
+    {
+        
+//        _shareVw = [ShareView defaultShareView];
+//        [_shareVw setShareContentWithTitle:self.title1 content:self.title2 shareImage:[UIImage imageNamed:@"share.jpg"]  shareURL:self.url2];
+//        [_shareVw show];
+//        [_shareVw setShareViewBlock:^(BOOL isSuccess) {
+//            if (isSuccess) {
+//                NSLog(@"分享成功");
+//            }else {
+//                NSLog(@"分享失败");
+//            }
+//        }];
+//
+//        [_shareVw setShareViewCopyBlock:^(BOOL isSuccess) {
+//            if (isSuccess) {
+//                NSLog(@"复制链接成功");
+//            }else {
+//                NSLog(@"复制链接失败");
+//            }
+//        }];
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - WKUIDelegate

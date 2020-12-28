@@ -43,6 +43,7 @@ zss_editor.init = function() {
     
     
     $('#zss_editor_content').on('touchend', function(e) {
+                                window.location = "receiveTouch://0/";
         zss_editor.enabledEditingItems(e);
         //                                var clicked = $(e.target);
         //                                if (!clicked.hasClass('zs_active')) {
