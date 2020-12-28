@@ -378,6 +378,10 @@
     CGFloat newHeight = self.editorView.scrollView.contentSize.height;
     [self reloadEditorViewWithNewHeith:newHeight];
     
+    [self getText:^(NSString *html) {
+        CLog(@"当前文本是:%@", html);
+    }];
+    
 
     if([keyPath isEqualToString:@"transform"]){
         
