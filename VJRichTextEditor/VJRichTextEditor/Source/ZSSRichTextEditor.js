@@ -521,6 +521,7 @@ zss_editor.priInsertImage = function(){
 //插入url图片
 zss_editor.insertImage = function(url, alt) {
     var img = document.createElement('img');//创建一个标签
+    img.setAttribute('style',"text-align: center;display:block;");
     img.setAttribute('src',url);//给标签定义src链接
     img.setAttribute('alt',alt);//给标签定义alt
     document.getElementById('imageSpan').appendChild(img);//放到指定的id里
@@ -534,10 +535,10 @@ zss_editor.deletInsertImageSpan = function(){
     $('#imageSpan').before(html);
     $('#imageSpan').remove();
 }
-
+// style="display:block; margin:0 auto;"
 zss_editor.insertImageBase64String = function(imageBase64String, alt) {
     zss_editor.restorerange();
-    var html = '<img src="data:image/jpeg;base64,'+imageBase64String+'" alt="'+alt+'" />';
+    var html = '<img style="text-align: center;display:block;" src="data:image/jpeg;base64,'+imageBase64String+'" alt="'+alt+'" />';
     zss_editor.insertHTML(html);
     zss_editor.enabledEditingItems();
 }

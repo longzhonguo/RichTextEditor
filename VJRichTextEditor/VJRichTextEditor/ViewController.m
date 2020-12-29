@@ -22,6 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"HTML" style:UIBarButtonItemStylePlain target:self action:@selector(getHTMLText)];
+    
 //    RichTextEditorDemo *vc = [[RichTextEditorDemo alloc] init];
 //    [self.navigationController pushViewController:vc animated:YES];
     
@@ -50,6 +52,7 @@
 
 }
 
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (self.demoVC.isEditorScrollEnd) {
         [self.scrollV setContentOffset:scrollView.contentOffset];
@@ -61,5 +64,23 @@
     self.demoVC.superScrollOffsetH = scrollView.contentOffset.y;
 }
 
+- (void)getHTMLText{
+    
+    [self.demoVC vj_getHTMLTitle:^(NSString *html) {
+        NSLog(@"标题 :\n %@",html);
+    }];
+    
+   
+    [self.demoVC getHTML:^(NSString *html) {
+        NSLog(@"html格式 :\n %@",html);
+    }];
+    
+    
+    [self.demoVC getText:^(NSString *html) {
+        NSLog(@"文本格式 :\n %@",html);
+    }];
+    
+    
+}
 
 @end

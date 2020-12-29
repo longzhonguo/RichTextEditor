@@ -317,7 +317,6 @@
     //            CGRect rect = self.editorView.frame;
     //            rect.origin.y = 0;
     //            self.editorView.frame = rect;
-                [self.superScrollView setContentOffset:CGPointZero animated:NO];
             }
         }];
     }
@@ -717,6 +716,7 @@
     CGRect newFrame =  webView.frame;
     newFrame.size.height = actualSize.height;
     webView.frame = newFrame;
+    
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
@@ -818,7 +818,9 @@
     CLog(@"userContentController >> name = %@, body = %@", message.name, message.body);
     //在这里截取H5调用的本地方法
     if ([message.name isEqualToString:@"column"]){
-        [self didSelectedColumn];
+        if (self.superScrollOffsetH > 0) {
+            [self.superScrollView setContentOffset:CGPointZero animated:NO];
+        }
     }
 }
 
@@ -878,9 +880,10 @@
 //    }];
 }
 
--(void)didSelectedColumn{
-    //需要重写
-}
+//-(void)didSelectedColumn{
+//    //需要重写
+//    CLog(@"((((())))))");
+//}
 
 #pragma mark - methods
 

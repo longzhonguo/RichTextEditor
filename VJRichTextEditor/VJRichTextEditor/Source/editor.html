@@ -189,6 +189,17 @@ div.zss_editor_footer{
     <!-- ZSSRichTextEditor Editable Content -->
     <div id="zss_editor_content" class="zs_editor_content" contenteditable="true" placeholder="请开始你的创作"></div>
 
+    <script>
+        var div = document.getElementById('zss_editor_content');
+        div.addEventListener('click', test);
+        
+        function test(e) {
+           window.webkit.messageHandlers.column.postMessage({
+                  "body": "buttonActionMessage"
+              });
+        }
+    </script>
+    
     <!-- Footer -->
     <div id="zss_editor_footer" class="zss_editor_footer"></div>
     
