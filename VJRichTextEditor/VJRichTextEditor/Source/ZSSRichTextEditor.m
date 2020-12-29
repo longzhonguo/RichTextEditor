@@ -331,7 +331,10 @@
         CGRect rect1 = self.coverView.frame;
         rect1.origin.y = self.editorView.bottom+20+8;
         self.coverView.frame = rect1;
+        
+        self.view.height = self.editorView.height + 28 +self.coverView.height;
     }];
+    
 }
 
 // 键盘弹起时, 展示editorview的固定高度
