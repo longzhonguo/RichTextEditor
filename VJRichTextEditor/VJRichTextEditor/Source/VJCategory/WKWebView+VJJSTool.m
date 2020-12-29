@@ -83,6 +83,11 @@
     [self evaluateJavaScript:trigger completionHandler:nil];
 }
 
+- (void)setTextColor:(NSString *)color{
+    NSString *trigger = [NSString stringWithFormat:@"zss_editor.setTextColor(\"%@\");", color];
+    [self evaluateJavaScript:trigger completionHandler:nil];
+}
+
 #pragma mark - 对齐方式
 - (void)alignLeft {
     NSString *trigger = @"zss_editor.setJustifyLeft();";

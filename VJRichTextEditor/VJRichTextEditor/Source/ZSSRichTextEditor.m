@@ -15,7 +15,7 @@
 #import "NSString+VJUUID.h"
 #import "DPCChooseCoverView.h"
 
-#define EditorHeight 320
+#define EditorHeight 264
 #define pDeviceWidth [UIScreen mainScreen].bounds.size.width
 #define pDeviceHeight [UIScreen mainScreen].bounds.size.height
 //状态栏高度
@@ -71,7 +71,7 @@
 @property (nonatomic,strong) KWEditorBar *toolBarView;
 @property (nonatomic,strong) KWFontStyleBar *fontBar;
 
-@property(nonatomic,copy)NSString *vj_columnText;
+@property (nonatomic,copy) NSString *vj_columnText;
 @property (nonatomic, assign) CGFloat sjTime;
 @property (nonatomic, strong) UILabel *numInputLab;
 @property (nonatomic, strong) DPCChooseCoverView *coverView;
@@ -142,7 +142,7 @@
         case 0:{//字体
             editorBar.fontButton.selected = !editorBar.fontButton.selected;
             if (editorBar.fontButton.selected) {
-                [self.view addSubview:self.fontBar];
+                [[UIApplication sharedApplication].keyWindow addSubview:self.fontBar];
             }else{
                 [self.fontBar removeFromSuperview];
             }
@@ -345,7 +345,7 @@
 
 // 键盘落下时, 展示editorview的最大高度
 - (void)refreshEditorViewWithMaxHeight{
-    CGFloat maxheight = SCREEN_H-LL_StatusBarAndNavigationBarHeight-CL_iPhoneXBottomSafeHeight-44-8-20;
+    CGFloat maxheight = SCREEN_H-LL_StatusBarAndNavigationBarHeight-CL_iPhoneXBottomSafeHeight-44-12-24-8-20;
     CGRect rect = self.editorView.frame;
     if (self.editorView.scrollView.contentSize.height > maxheight) {
         rect.size.height = maxheight;

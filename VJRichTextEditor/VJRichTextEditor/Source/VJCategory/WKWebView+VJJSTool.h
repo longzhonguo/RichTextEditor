@@ -46,6 +46,8 @@ typedef void (^callBack)(NSString *html);
 
 - (void)setFontSize:(NSString *)size;
 
+- (void)setTextColor:(NSString *)color;
+
 ///对齐方式
 - (void)alignLeft;
 

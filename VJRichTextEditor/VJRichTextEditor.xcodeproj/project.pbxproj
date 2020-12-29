@@ -11,6 +11,7 @@
 		AB063ADB2595B50B00825194 /* UIFont+fontNameHeavity.m in Sources */ = {isa = PBXBuildFile; fileRef = AB063AD72595B50A00825194 /* UIFont+fontNameHeavity.m */; };
 		AB063ADC2595B50B00825194 /* UIViewExt.m in Sources */ = {isa = PBXBuildFile; fileRef = AB063AD82595B50B00825194 /* UIViewExt.m */; };
 		AB70DCE92595953B00D1EDF1 /* DPCChooseCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB70DCE82595953B00D1EDF1 /* DPCChooseCoverView.m */; };
+		ABF2334E259B095900CE2770 /* DPCFontStyleBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF2334D259B095900CE2770 /* DPCFontStyleBar.m */; };
 		CF4DB42E22C301E100BDA3DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4DB42D22C301E100BDA3DC /* AppDelegate.m */; };
 		CF4DB43122C301E100BDA3DC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4DB43022C301E100BDA3DC /* ViewController.m */; };
 		CF4DB43622C301E200BDA3DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF4DB43522C301E200BDA3DC /* Assets.xcassets */; };
@@ -104,6 +105,8 @@
 		AB70DCE5259594A100D1EDF1 /* DPConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPConfig.h; sourceTree = "<group>"; };
 		AB70DCE72595953B00D1EDF1 /* DPCChooseCoverView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPCChooseCoverView.h; sourceTree = "<group>"; };
 		AB70DCE82595953B00D1EDF1 /* DPCChooseCoverView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPCChooseCoverView.m; sourceTree = "<group>"; };
+		ABF2334C259B095900CE2770 /* DPCFontStyleBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPCFontStyleBar.h; sourceTree = "<group>"; };
+		ABF2334D259B095900CE2770 /* DPCFontStyleBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPCFontStyleBar.m; sourceTree = "<group>"; };
 		CF4DB42922C301E100BDA3DC /* VJRichTextEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VJRichTextEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF4DB42C22C301E100BDA3DC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CF4DB42D22C301E100BDA3DC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -293,6 +296,8 @@
 				CF4DB44722C3023A00BDA3DC /* KWEditorBar.h */,
 				CF4DB44A22C3023A00BDA3DC /* KWEditorBar.m */,
 				CF4DB44822C3023A00BDA3DC /* KWEditorBar.xib */,
+				ABF2334C259B095900CE2770 /* DPCFontStyleBar.h */,
+				ABF2334D259B095900CE2770 /* DPCFontStyleBar.m */,
 				CF4DB44622C3023A00BDA3DC /* KWFontStyleBar.h */,
 				CF4DB44922C3023A00BDA3DC /* KWFontStyleBar.m */,
 			);
@@ -525,6 +530,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABF2334E259B095900CE2770 /* DPCFontStyleBar.m in Sources */,
 				182BEE222596390300656093 /* DPCCustomScrollView.m in Sources */,
 				AB063ADC2595B50B00825194 /* UIViewExt.m in Sources */,
 				CF6A767323408E3100863373 /* WKWebView+HackishAccessoryHiding.m in Sources */,

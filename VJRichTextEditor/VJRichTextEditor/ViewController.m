@@ -9,8 +9,9 @@
 #import "ViewController.h"
 #import "RichTextEditorDemo.h"
 #import "DPCCustomScrollView.h"
+#import "DPCFontStyleBar.h"
 
-#define EditorHeight 320
+#define EditorHeight 264
 
 @interface ViewController ()<UIScrollViewDelegate>
 @property (nonatomic, strong) DPCCustomScrollView *scrollV;
@@ -24,31 +25,34 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"HTML" style:UIBarButtonItemStylePlain target:self action:@selector(getHTMLText)];
     
-//    RichTextEditorDemo *vc = [[RichTextEditorDemo alloc] init];
-//    [self.navigationController pushViewController:vc animated:YES];
+////    RichTextEditorDemo *vc = [[RichTextEditorDemo alloc] init];
+////    [self.navigationController pushViewController:vc animated:YES];
+//
+////    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+////    btn.frame = CGRectMake(100, 100, 100, 60);
+////    [btn setTitle:@"测试" forState:UIControlStateNormal];
+////    btn.backgroundColor = [UIColor cyanColor];
+////    [btn addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
+////    [self.view addSubview:btn];
+//
+//    self.scrollV = [[DPCCustomScrollView alloc] initWithFrame:CGRectMake(0, LL_StatusBarAndNavigationBarHeight, SCREEN_W, SCREEN_H-LL_StatusBarAndNavigationBarHeight-CL_iPhoneXBottomSafeHeight)];
+//    self.scrollV.contentSize = CGSizeMake(SCREEN_W, EditorHeight+414+44+LL_StatusBarAndNavigationBarHeight);
+////    self.scrollV.contentOffset = CGPointMake([UIScreen mainScreen].bounds.size.width, 0);
+////    self.scrollV.pagingEnabled = YES;
+//    self.scrollV.delegate = self;
+//    self.scrollV.bounces = NO;
+//    self.scrollV.showsVerticalScrollIndicator = NO;
+//    self.scrollV.backgroundColor = [UIColor redColor];
+//    [self.view addSubview:self.scrollV];
+//
+//    self.demoVC = [[RichTextEditorDemo alloc]init];
+//    self.demoVC.superScrollView = self.scrollV;
+//    [self addChildViewController:self.demoVC];
+//    [self.scrollV addSubview:self.demoVC.view];
+////    [self didMoveToParentViewController:self];
     
-//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    btn.frame = CGRectMake(100, 100, 100, 60);
-//    [btn setTitle:@"测试" forState:UIControlStateNormal];
-//    btn.backgroundColor = [UIColor cyanColor];
-//    [btn addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:btn];
-
-    self.scrollV = [[DPCCustomScrollView alloc] initWithFrame:CGRectMake(0, LL_StatusBarAndNavigationBarHeight, SCREEN_W, SCREEN_H-LL_StatusBarAndNavigationBarHeight-CL_iPhoneXBottomSafeHeight)];
-    self.scrollV.contentSize = CGSizeMake(SCREEN_W, EditorHeight+414+44+LL_StatusBarAndNavigationBarHeight);
-//    self.scrollV.contentOffset = CGPointMake([UIScreen mainScreen].bounds.size.width, 0);
-//    self.scrollV.pagingEnabled = YES;
-    self.scrollV.delegate = self;
-    self.scrollV.bounces = NO;
-    self.scrollV.showsVerticalScrollIndicator = NO;
-    self.scrollV.backgroundColor = [UIColor redColor];
-    [self.view addSubview:self.scrollV];
-
-    self.demoVC = [[RichTextEditorDemo alloc]init];
-    self.demoVC.superScrollView = self.scrollV;
-    [self addChildViewController:self.demoVC];
-    [self.scrollV addSubview:self.demoVC.view];
-//    [self didMoveToParentViewController:self];
+    DPCFontStyleBar *bar = [[DPCFontStyleBar alloc] initWithFrame:CGRectMake(0, SCREEN_H-271, SCREEN_W, 271)];
+    [[UIApplication sharedApplication].keyWindow addSubview:bar];
 
 }
 
