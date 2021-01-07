@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 //当前view高度
-#define KWFontBar_Height 44
+#define DPCFontBar_Height 257
 
 @class DPCFontStyleBar;
 @protocol DPCFontStyleBarDelegate<NSObject>

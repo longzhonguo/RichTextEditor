@@ -104,6 +104,13 @@
     }
 }
 
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    if (!self.color_black.selected && !self.color_gray.selected && !self.color_orange.selected && !self.color_red.selected && !self.color_green.selected && !self.color_blue.selected && !self.color_purple.selected) {
+        self.color_black.selected = YES;
+    }
+    
+}
 
 #pragma mark - 自定义方法
 - (void)clickButton:(UIButton *)button{
@@ -122,55 +129,39 @@
     }
     
     CLog(@"点击了button %@",button.orderTag);
-    
-//    if (button == self.color_black && self.color_black.selected) {
-//        button.selected = !button.selected;
-//
-//        for (UIButton *btn in self.wzys_bgV.subviews) {
-//            btn.selected = btn!=button ? NO : YES;
-//        }
-//
-////        //恢复默认字体
-////        if (!self.heading1Item.selected && !self.heading2Item.selected && !self.heading3Item.selected) {
-////
-////            if ([self.delegate respondsToSelector:@selector(fontBarResetNormalFontSize)]) {
-////                [self.delegate fontBarResetNormalFontSize];
-////            }
-////        }
-//
-//    }else if (button == self.heading2Item && self.heading2Item.selected){
-//        button.selected = !button.selected;
-//
-//        self.heading1Item.selected = NO;
-//        self.heading3Item.selected = NO;
-//        //恢复默认字体
-//        if (!self.heading1Item.selected && !self.heading2Item.selected && !self.heading3Item.selected) {
-//
-//            if ([self.delegate respondsToSelector:@selector(fontBarResetNormalFontSize)]) {
-//                [self.delegate fontBarResetNormalFontSize];
-//            }
-//        }
-//    }else
-//    if (button == self.color_black){
-//        button.selected = !button.selected;
-//        self.color_black.selected = NO;
-//        self.color_black.selected = NO;
-//        //恢复默认字体
-//        if (!self.heading1Item.selected && !self.heading2Item.selected && !self.heading3Item.selected) {
-//
-//            if ([self.delegate respondsToSelector:@selector(fontBarResetNormalFontSize)]) {
-//                [self.delegate fontBarResetNormalFontSize];
-//            }
-//        }
-//    }
-    
 
-    
     if ([self.delegate respondsToSelector:@selector(fontBar:didClickBtn:)]) {
         [self.delegate fontBar:self didClickBtn:button];
     }
 }
 
+#pragma mark - 代理方法
+- (void)updateFontBarWithButtonName:(NSString *)name{
+    
+     CLog(@"name = %@",name);
+    
+//    NSArray *itemNames = [name componentsSeparatedByString:@","];
+//    NSMutableArray *tempArr = [NSMutableArray array];
+//    for (NSString *orderTag in itemNames) {
+//            for (UIButton *btn in self.items) {
+//                if (![tempArr containsObject:btn] && btn.orderTag.length > 0) {
+//                    if ([btn.orderTag isEqualToString:orderTag]) {
+//                        btn.selected = YES;
+//                         [tempArr addObject:btn];
+//                    }
+//                    else{
+//                        btn.selected = NO;
+//                    }
+//                }
+//            }
+//    }
+//
+//
+//    if (!self.heading1Item.selected && !self.heading2Item.selected && !self.heading3Item.selected) {
+//        self.heading2Item.selected = YES;
+//    }
+    
+}
 
 #pragma mark - 懒加载
 - (UIButton *)boldItem{

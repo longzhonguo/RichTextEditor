@@ -10,6 +10,7 @@
 #import "ZSSRichTextEditor.h"
 #import "KWEditorBar.h"
 #import "KWFontStyleBar.h"
+#import "DPCFontStyleBar.h"
 #import "WKWebView+VJJSTool.h"
 #import "WKWebView+HackishAccessoryHiding.h"
 #import "NSString+VJUUID.h"
@@ -30,7 +31,7 @@
 @import JavaScriptCore;
 
 
-@interface ZSSRichTextEditor ()<KWEditorBarDelegate,KWFontStyleBarDelegate,WKNavigationDelegate,WKUIDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate,WKScriptMessageHandler, UIScrollViewDelegate, UIWebViewDelegate>
+@interface ZSSRichTextEditor ()<KWEditorBarDelegate,KWFontStyleBarDelegate, DPCFontStyleBarDelegate, WKNavigationDelegate,WKUIDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate,WKScriptMessageHandler, UIScrollViewDelegate, UIWebViewDelegate>
 
 /*
  *  BOOL for holding if the resources are loaded or not
@@ -69,7 +70,7 @@
 - (void)tidyHTML:(NSString *)html complete:(callBack)block;
 
 @property (nonatomic,strong) KWEditorBar *toolBarView;
-@property (nonatomic,strong) KWFontStyleBar *fontBar;
+@property (nonatomic,strong) DPCFontStyleBar *fontBar;
 
 @property (nonatomic,copy) NSString *vj_columnText;
 @property (nonatomic, assign) CGFloat sjTime;
@@ -142,9 +143,11 @@
         case 0:{//字体
             editorBar.fontButton.selected = !editorBar.fontButton.selected;
             if (editorBar.fontButton.selected) {
-                [[UIApplication sharedApplication].keyWindow addSubview:self.fontBar];
+                self.fontBar.hidden = NO;
+//                [self dismissKeyboard];
             }else{
-                [self.fontBar removeFromSuperview];
+                self.fontBar.hidden = YES;
+//                [self.fontBar removeFromSuperview];
             }
         }
             break;
@@ -187,7 +190,7 @@
 }
 
 #pragma mark - fontbardelegate
-- (void)fontBar:(KWFontStyleBar *)fontBar didClickBtn:(UIButton *)button{
+- (void)fontBar:(DPCFontStyleBar *)fontBar didClickBtn:(UIButton *)button{
     if (self.toolBarView.transform.ty>=0) {
         [self.editorView showKeyboardContent];
     }
@@ -281,7 +284,9 @@
         [UIView animateWithDuration:duration animations:^{
             self.toolBarView.transform =  CGAffineTransformIdentity;
             self.toolBarView.keyboardButton.selected = NO;
-            [self refreshEditorViewWithMaxHeight];
+            if (!self.toolBarView.fontButton.selected) {
+                [self refreshEditorViewWithMaxHeight];
+            }
             
             static int a = 0;
             if (a != 0) {
@@ -374,10 +379,14 @@
 //}
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
+    CLog(@"KVO的keyPath >>> %@",keyPath);
     if([keyPath isEqualToString:@"transform"]){
-        CGRect fontBarFrame = self.fontBar.frame;
-        fontBarFrame.origin.y = CGRectGetMaxY(self.toolBarView.frame)- KWFontBar_Height - KWEditorBar_Height;
-        self.fontBar.frame = fontBarFrame;
+        if (!self.toolBarView.fontButton.selected) {
+//            CGRect fontBarFrame = self.fontBar.frame;
+//            fontBarFrame.origin.y = CGRectGetMaxY(self.toolBarView.frame);
+//            self.fontBar.frame = fontBarFrame;
+        }
+        
     }else if([keyPath isEqualToString:@"URL"]){
         NSString *urlString = self.editorView.URL.absoluteString;
         NSLog(@"URL------%@",urlString);
@@ -941,7 +950,8 @@
 }
 
 
-#pragma mark - setter
+#pragma mark - 懒加载
+// 底部区域, 包括选择封面, 添加学院, 添加标签
 - (UIView *)bottomBgV{
     if (!_bottomBgV) {
         _bottomBgV = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-CL_iPhoneXBottomSafeHeight, SCREEN_W, CL_iPhoneXBottomSafeHeight)];
@@ -951,6 +961,7 @@
     return _bottomBgV;
 }
 
+// 输入区域的字数统计label
 - (UILabel *)numInputLab{
     if (!_numInputLab) {
         _numInputLab = [[UILabel alloc] initWithFrame:CGRectMake(16, self.editorView.bottom, SCREEN_W-32, 20)];
@@ -962,6 +973,7 @@
     return _numInputLab;
 }
 
+// 选择封面
 - (DPCChooseCoverView *)coverView{
     if (!_coverView) {
         _coverView = [[DPCChooseCoverView alloc] initWithFrame:CGRectMake(0, self.numInputLab.bottom+8, SCREEN_W, SCREEN_H)];
@@ -990,11 +1002,14 @@
     }
     
     [[UIApplication sharedApplication].keyWindow addSubview:self.toolBarView];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.fontBar];
+    
     self.toolBarView.delegate = self;
     [self.toolBarView addObserver:self forKeyPath:@"transform" options:
      NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
 }
 
+// web富文本输入区域
 -(WKWebView *)editorView{
     if (!_editorView) {
         WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc]init];
@@ -1016,6 +1031,7 @@
     return _editorView;
 }
 
+// 富文本选择
 - (KWEditorBar *)toolBarView{
     if (!_toolBarView) {
         _toolBarView = [KWEditorBar editorBar];
@@ -1025,12 +1041,13 @@
     return _toolBarView;
 }
 
-- (KWFontStyleBar *)fontBar{
+- (DPCFontStyleBar *)fontBar{
     if (!_fontBar) {
-        _fontBar = [[KWFontStyleBar alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.toolBarView.frame) - KWFontBar_Height - KWEditorBar_Height, self.view.frame.size.width, KWFontBar_Height)];
+        _fontBar = [[DPCFontStyleBar alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.toolBarView.frame), self.view.frame.size.width, DPCFontBar_Height)];
         _fontBar.delegate = self;
-        [_fontBar.heading2Item setSelected:YES];
-        
+//        [_fontBar.heading2Item setSelected:YES];
+        _fontBar.color_black.selected = YES;
+        _fontBar.hidden = YES;
     }
     return _fontBar;
 }
