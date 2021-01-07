@@ -24,7 +24,7 @@
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"HTML" style:UIBarButtonItemStylePlain target:self action:@selector(getHTMLText)];
-    
+
 //    RichTextEditorDemo *vc = [[RichTextEditorDemo alloc] init];
 //    [self.navigationController pushViewController:vc animated:YES];
 
