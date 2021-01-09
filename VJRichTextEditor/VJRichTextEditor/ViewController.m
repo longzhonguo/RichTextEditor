@@ -66,6 +66,12 @@
         [self.scrollV setContentOffset:CGPointZero];
     }
     self.demoVC.superScrollOffsetH = scrollView.contentOffset.y;
+   
+    if (!self.demoVC.fontBar.hidden) {
+        self.demoVC.fontBar.hidden = YES;
+        self.demoVC.toolBarView.fontButton.selected = NO;
+        self.demoVC.toolBarView.top = SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height;
+    }
 }
 
 - (void)getHTMLText{

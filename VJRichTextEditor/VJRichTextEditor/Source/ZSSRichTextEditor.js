@@ -284,6 +284,11 @@ zss_editor.setFontSize = function(fontSize){
     zss_editor.enabledEditingItems();
 }
 
+zss_editor.setTextColor = function(textColor){
+    document.execCommand("textColor", false, textColor);
+    zss_editor.enabledEditingItems();
+}
+
 zss_editor.setHeading = function(heading) {
     var current_selection = $(zss_editor.getSelectedNode());
     var t = current_selection.prop("tagName").toLowerCase();
@@ -376,14 +381,14 @@ zss_editor.setFontFamily = function(fontFamily) {
 }
 
 zss_editor.setTextColor = function(color) {
-    
+
     zss_editor.restorerange();
     document.execCommand("styleWithCSS", null, true);
     document.execCommand('foreColor', false, color);
     document.execCommand("styleWithCSS", null, false);
     zss_editor.enabledEditingItems();
     // document.execCommand("removeFormat", false, "foreColor"); // Removes just foreColor
-    
+
 }
 
 zss_editor.setBackgroundColor = function(color) {
@@ -608,6 +613,10 @@ zss_editor.enabledEditingItems = function(e) {
     if (fontSizeblock.length > 0) {
         items.push(fontSizeblock);
     }
+    var textColorblock = document.queryCommandValue('textColor');
+    if (textColorblock.length > 0) {
+        items.push(textColorblock);
+    }
     
     if (zss_editor.isCommandEnabled('bold')) {
         items.push('bold');
@@ -671,11 +680,11 @@ zss_editor.enabledEditingItems = function(e) {
         if (bgColor.length != 0 && bgColor != 'rgba(0, 0, 0, 0)' && bgColor != 'rgb(0, 0, 0)' && bgColor != 'transparent') {
             items.push('backgroundColor');
         }
-        // Text Color
-        var textColor = t.css('color');
-        if (textColor.length != 0 && textColor != 'rgba(0, 0, 0, 0)' && textColor != 'rgb(0, 0, 0)' && textColor != 'transparent') {
-            items.push('textColor');
-        }
+//        // Text Color
+//        var textColor = t.css('color');
+//        if (textColor.length != 0 && textColor != 'rgba(0, 0, 0, 0)' && textColor != 'rgb(0, 0, 0)' && textColor != 'transparent') {
+//            items.push('textColor');
+//        }
         
         //Fonts
         var font = t.css('font-family');

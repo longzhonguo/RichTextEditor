@@ -15,6 +15,7 @@
 #import "WKWebView+HackishAccessoryHiding.h"
 #import "NSString+VJUUID.h"
 #import "DPCChooseCoverView.h"
+#import "UIControl+KWButtonExtension.h"
 
 #define EditorHeight 264
 #define pDeviceWidth [UIScreen mainScreen].bounds.size.width
@@ -69,14 +70,13 @@
  */
 - (void)tidyHTML:(NSString *)html complete:(callBack)block;
 
-@property (nonatomic,strong) KWEditorBar *toolBarView;
-@property (nonatomic,strong) DPCFontStyleBar *fontBar;
-
 @property (nonatomic,copy) NSString *vj_columnText;
-@property (nonatomic, assign) CGFloat sjTime;
+@property (nonatomic, assign) CGFloat sjTime;// 键盘落下的时长
+@property (nonatomic, assign) CGFloat jpHeight;//键盘的高
 @property (nonatomic, strong) UILabel *numInputLab;
 @property (nonatomic, strong) DPCChooseCoverView *coverView;
 @property (nonatomic, strong) UIView *bottomBgV;
+@property (nonatomic, assign) BOOL clickFontFlag;//区分键盘落下的原因: YES 点击字体按钮; NO 滚动页面
 @end
 
 /*
@@ -143,11 +143,22 @@
         case 0:{//字体
             editorBar.fontButton.selected = !editorBar.fontButton.selected;
             if (editorBar.fontButton.selected) {
+                // 选中字体键
                 self.fontBar.hidden = NO;
-//                [self dismissKeyboard];
+                if (editorBar.top == SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height) {
+                    // 低位点选字体按钮
+                    self.jpHeight = self.jpHeight==0?271:self.jpHeight;
+                    editorBar.top = SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height - self.jpHeight;
+                    self.fontBar.top = editorBar.bottom;
+                }else{
+                    // 高位点选字体按钮
+                    self.clickFontFlag = YES;
+                    [self.editorView hiddenKeyboard];
+                }
             }else{
+                // 取消字体键选中
                 self.fontBar.hidden = YES;
-//                [self.fontBar removeFromSuperview];
+                editorBar.top = SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height;
             }
         }
             break;
@@ -194,65 +205,85 @@
     if (self.toolBarView.transform.ty>=0) {
         [self.editorView showKeyboardContent];
     }
-    switch (button.tag) {
-        case 0:{
-            //粗体
-            [self.editorView setBold];
-        }
-            break;
-        case 1:{//下划线
-            [self.editorView setUnderline];
-        }
-            break;
-        case 2:{//斜体
-            [self.editorView setItalic];
-        }
-            break;
-        case 3:{//14号字体
-            [self.editorView setFontSize:@"2"];
-        }
-            break;
-        case 4:{//16号字体
-            [self.editorView setFontSize:@"3"];
-        }
-            break;
-        case 5:{//18号字体
-            [self.editorView setFontSize:@"4"];
-        }
-            break;
-        case 6:{//左对齐
-            [self.editorView alignLeft];
-        }
-            break;
-        case 7:{//居中对齐
-            [self.editorView alignCenter];
-        }
-            break;
-        case 8:{//右对齐
-            [self.editorView alignRight];
-        }
-            break;
-        case 9:{//无序
-            [self.editorView setUnorderedList];
-        }
-            break;
-        case 10:{
-            //缩进
-            button.selected = !button.selected;
-            if (button.selected) {
-                [self.editorView setIndent];
-            }else{
-                [self.editorView setOutdent];
-            }
-        }
-            break;
-        case 11:{
-            
-        }
-            break;
-        default:
-            break;
+    [self.editorView focusTextEditor];
+    
+    CLog(@"点击了button %@", button.orderTag);
+    if ([@"bold" isEqualToString:button.orderTag]) {
+        //粗体
+        [self.editorView setBold];
+    } else if ([@"italic" isEqualToString:button.orderTag]) {
+        //斜体
+        [self.editorView setItalic];
+    } else if ([@"underline" isEqualToString:button.orderTag]) {
+        //下划线
+        [self.editorView setUnderline];
+    } else if ([button.orderTag hasPrefix:@"bjqcolor_"]) {
+        NSString *cStr = [button.orderTag substringFromIndex:9];
+        [self.editorView setTextColor:cStr];
     }
+//    else if ([@"" isEqualToString:button.orderTag]) {
+//
+//    }
+    
+//    switch (button.tag) {
+//        case 0:{
+//            //粗体
+//            [self.editorView setBold];
+//        }
+//            break;
+//        case 1:{//下划线
+//            [self.editorView setUnderline];
+//        }
+//            break;
+//        case 2:{//斜体
+//            [self.editorView setItalic];
+//        }
+//            break;
+//        case 3:{//14号字体
+//            [self.editorView setFontSize:@"2"];
+//        }
+//            break;
+//        case 4:{//16号字体
+//            [self.editorView setFontSize:@"3"];
+//        }
+//            break;
+//        case 5:{//18号字体
+//            [self.editorView setFontSize:@"4"];
+//        }
+//            break;
+//        case 6:{//左对齐
+//            [self.editorView alignLeft];
+//        }
+//            break;
+//        case 7:{//居中对齐
+//            [self.editorView alignCenter];
+//        }
+//            break;
+//        case 8:{//右对齐
+//            [self.editorView alignRight];
+//        }
+//            break;
+//        case 9:{//无序
+//            [self.editorView setUnorderedList];
+//        }
+//            break;
+//        case 10:{
+//            //缩进
+//            button.selected = !button.selected;
+//            if (button.selected) {
+//                [self.editorView setIndent];
+//            }else{
+//                [self.editorView setOutdent];
+//            }
+//        }
+//            break;
+//        case 11:{
+//
+//        }
+//            break;
+//        default:
+//            break;
+//    }
     
 }
 
@@ -282,10 +313,17 @@
         self.bottomBgV.hidden = NO;
         
         [UIView animateWithDuration:duration animations:^{
-            self.toolBarView.transform =  CGAffineTransformIdentity;
-            self.toolBarView.keyboardButton.selected = NO;
-            if (!self.toolBarView.fontButton.selected) {
+//            self.toolBarView.keyboardButton.selected = NO;
+            if (self.clickFontFlag) {
+                // 点击字体键, 唤醒字体页面, 键盘落下
+//                self.fontBar.hidden = NO;
+                self.fontBar.top = self.toolBarView.bottom;
+            }else{
+                // 字体键未选中, 滚动时键盘落下
+                self.toolBarView.top =  SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height;
                 [self refreshEditorViewWithMaxHeight];
+                self.fontBar.hidden = YES;
+                self.clickFontFlag = NO;
             }
             
             static int a = 0;
@@ -298,13 +336,17 @@
     }else{
         // 键盘抬起
         float height = pDeviceHeight-pStatusBarHeight-pNavigationHeight-self.toolBarView.frame.size.height-frame.size.height;
+        self.jpHeight = frame.size.height;
         [self.editorView setContentHeight: height];
         
         self.bottomBgV.hidden = YES;
+        self.toolBarView.fontButton.selected = NO;
+        self.fontBar.hidden = YES;
         
         [UIView animateWithDuration:duration animations:^{
-            self.toolBarView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height+CL_iPhoneXBottomSafeHeight);
-            self.toolBarView.keyboardButton.selected = YES;
+//            self.toolBarView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height+CL_iPhoneXBottomSafeHeight);
+            self.toolBarView.top = SCREEN_H-frame.size.height-KWEditorBar_Height;
+//            self.toolBarView.keyboardButton.selected = YES;
             if (self.editorView.scrollView.contentSize.height > EditorHeight) {
                 self.isEditorScrollEnd = NO;
             }else{
@@ -429,7 +471,7 @@
         self.fontBar.hidden = YES;
         self.toolBarView.hidden = YES;
     }else if([urlString rangeOfString:@"callback://0/"].location != NSNotFound){
-        self.fontBar.hidden = NO;
+//        self.fontBar.hidden = NO;
         self.toolBarView.hidden = NO;
         //更新 toolbar
         NSString *className = [urlString stringByReplacingOccurrencesOfString:@"callback://0/" withString:@""];
@@ -845,6 +887,12 @@
         self.isEditorScrollEnd = YES;
     }else{
         self.isEditorScrollEnd = NO;
+    }
+    
+    if (!self.fontBar.hidden) {
+        self.fontBar.hidden = YES;
+        self.toolBarView.fontButton.selected = NO;
+        self.toolBarView.top = SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height;
     }
     
 //    [self refreshEditorViewWithFixedHeight];

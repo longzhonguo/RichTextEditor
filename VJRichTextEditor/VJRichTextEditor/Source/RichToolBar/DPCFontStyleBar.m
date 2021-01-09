@@ -204,7 +204,7 @@
         _color_black = [UIButton buttonWithType:UIButtonTypeCustom];
         [_color_black setImage:[UIImage imageNamed:@"bjqcolor_black"] forState:UIControlStateNormal];
         [_color_black setImage:[UIImage imageNamed:@"bjqcolor_blackhover"] forState:UIControlStateSelected];
-        _color_black.orderTag = @"black";
+        _color_black.orderTag = @"bjqcolor_black";
         [_color_black addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _color_black;
@@ -215,7 +215,7 @@
         _color_gray = [UIButton buttonWithType:UIButtonTypeCustom];
         [_color_gray setImage:[UIImage imageNamed:@"bjqcolor_gray"] forState:UIControlStateNormal];
         [_color_gray setImage:[UIImage imageNamed:@"bjqcolor_grayhover"] forState:UIControlStateSelected];
-        _color_gray.orderTag = @"gray";
+        _color_gray.orderTag = @"bjqcolor_gray";
         [_color_gray addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _color_gray;
@@ -225,7 +225,7 @@
         _color_orange = [UIButton buttonWithType:UIButtonTypeCustom];
         [_color_orange setImage:[UIImage imageNamed:@"bjqcolor_orange"] forState:UIControlStateNormal];
         [_color_orange setImage:[UIImage imageNamed:@"bjqcolor_orangehover"] forState:UIControlStateSelected];
-        _color_orange.orderTag = @"orange";
+        _color_orange.orderTag = @"bjqcolor_orange";
         [_color_orange addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _color_orange;
@@ -236,7 +236,7 @@
         _color_red = [UIButton buttonWithType:UIButtonTypeCustom];
         [_color_red setImage:[UIImage imageNamed:@"bjqcolor_red"] forState:UIControlStateNormal];
         [_color_red setImage:[UIImage imageNamed:@"bjqcolor_redhover"] forState:UIControlStateSelected];
-        _color_red.orderTag = @"red";
+        _color_red.orderTag = @"bjqcolor_red";
         [_color_red addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _color_red;
@@ -247,7 +247,7 @@
         _color_green = [UIButton buttonWithType:UIButtonTypeCustom];
         [_color_green setImage:[UIImage imageNamed:@"bjqcolor_green"] forState:UIControlStateNormal];
         [_color_green setImage:[UIImage imageNamed:@"bjqcolor_greenhover"] forState:UIControlStateSelected];
-        _color_green.orderTag = @"green";
+        _color_green.orderTag = @"bjqcolor_green";
         [_color_green addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _color_green;
@@ -257,7 +257,7 @@
         _color_blue = [UIButton buttonWithType:UIButtonTypeCustom];
         [_color_blue setImage:[UIImage imageNamed:@"bjqcolor_blue"] forState:UIControlStateNormal];
         [_color_blue setImage:[UIImage imageNamed:@"bjqcolor_bluehover"] forState:UIControlStateSelected];
-        _color_blue.orderTag = @"blue";
+        _color_blue.orderTag = @"bjqcolor_blue";
         [_color_blue addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _color_blue;
@@ -268,7 +268,7 @@
         _color_purple = [UIButton buttonWithType:UIButtonTypeCustom];
         [_color_purple setImage:[UIImage imageNamed:@"bjqcolor_purple"] forState:UIControlStateNormal];
         [_color_purple setImage:[UIImage imageNamed:@"bjqcolor_purplehover"] forState:UIControlStateSelected];
-        _color_purple.orderTag = @"purple";
+        _color_purple.orderTag = @"bjqcolor_purple";
         [_color_purple addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _color_purple;

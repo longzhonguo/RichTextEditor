@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
+#import "KWEditorBar.h"
+#import "DPCFontStyleBar.h"
 
 /**
  *  The viewController used with ZSSRichTextEditor
@@ -23,6 +25,8 @@ typedef void (^callBack)(NSString *html);
  *  WKWebView for writing/editing/displaying the content
  */
 @property (nonatomic, strong) WKWebView *editorView;
+@property (nonatomic,strong) KWEditorBar *toolBarView;
+@property (nonatomic,strong) DPCFontStyleBar *fontBar;
 
 /**
  *  If the HTML should be formatted to be pretty
