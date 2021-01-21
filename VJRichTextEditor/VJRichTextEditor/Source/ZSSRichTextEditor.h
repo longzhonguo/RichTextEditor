@@ -27,6 +27,7 @@ typedef void (^callBack)(NSString *html);
 @property (nonatomic, strong) WKWebView *editorView;
 @property (nonatomic,strong) KWEditorBar *toolBarView;
 @property (nonatomic,strong) DPCFontStyleBar *fontBar;
+@property (nonatomic, assign) CGFloat jpHeight;//键盘的高
 
 /**
  *  If the HTML should be formatted to be pretty

@@ -72,11 +72,11 @@
 
 @property (nonatomic,copy) NSString *vj_columnText;
 @property (nonatomic, assign) CGFloat sjTime;// 键盘落下的时长
-@property (nonatomic, assign) CGFloat jpHeight;//键盘的高
 @property (nonatomic, strong) UILabel *numInputLab;
 @property (nonatomic, strong) DPCChooseCoverView *coverView;
 @property (nonatomic, strong) UIView *bottomBgV;
 @property (nonatomic, assign) BOOL clickFontFlag;//区分键盘落下的原因: YES 点击字体按钮; NO 滚动页面
+@property (nonatomic, assign) BOOL isKeyboardPop;//键盘是否是弹起状态
 @end
 
 /*
@@ -142,23 +142,39 @@
 //            break;
         case 0:{//字体
             editorBar.fontButton.selected = !editorBar.fontButton.selected;
+            self.jpHeight = self.jpHeight==0?271:self.jpHeight;
             if (editorBar.fontButton.selected) {
                 // 选中字体键
                 self.fontBar.hidden = NO;
                 if (editorBar.top == SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height) {
                     // 低位点选字体按钮
-                    self.jpHeight = self.jpHeight==0?271:self.jpHeight;
                     editorBar.top = SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height - self.jpHeight;
-                    self.fontBar.top = editorBar.bottom;
+//                    self.fontBar.top = editorBar.bottom;
+                    [[UIApplication sharedApplication].windows.lastObject addSubview:self.fontBar];
+                    [UIView animateWithDuration:0.25 animations:^{
+                        self.fontBar.frame = CGRectMake(0, SCREEN_H-self.jpHeight, SCREEN_W, self.jpHeight);
+                    }];
                 }else{
                     // 高位点选字体按钮
+                    [self.editorView prepareInsertImage];
                     self.clickFontFlag = YES;
-                    [self.editorView hiddenKeyboard];
+//                    [self.editorView hiddenKeyboard];
+                    [[UIApplication sharedApplication].windows.lastObject addSubview:self.fontBar];
+                    [UIView animateWithDuration:0.25 animations:^{
+                        self.fontBar.frame = CGRectMake(0, editorBar.bottom, SCREEN_W, SCREEN_H-editorBar.bottom);
+                    }];
                 }
             }else{
                 // 取消字体键选中
-                self.fontBar.hidden = YES;
-                editorBar.top = SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height;
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.fontBar.frame = CGRectMake(0, SCREEN_H, SCREEN_W, self.jpHeight);
+                }completion:^(BOOL finished) {
+                    self.fontBar.hidden = YES;
+                    [self.fontBar removeFromSuperview];
+                }];
+                if (!self.isKeyboardPop) {
+                    editorBar.top = SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height;
+                }
             }
         }
             break;
@@ -311,6 +327,7 @@
     if (frame.origin.y == pDeviceHeight) {
         // 键盘落下
         self.bottomBgV.hidden = NO;
+        self.isKeyboardPop = NO;
         
         [UIView animateWithDuration:duration animations:^{
 //            self.toolBarView.keyboardButton.selected = NO;
@@ -320,11 +337,13 @@
                 self.fontBar.top = self.toolBarView.bottom;
             }else{
                 // 字体键未选中, 滚动时键盘落下
-                self.toolBarView.top =  SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height;
+//                self.toolBarView.top =  SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height;
                 [self refreshEditorViewWithMaxHeight];
-                self.fontBar.hidden = YES;
+//                self.fontBar.hidden = YES;
                 self.clickFontFlag = NO;
             }
+            self.toolBarView.fontButton.selected = NO;
+            self.toolBarView.top = SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height;
             
             static int a = 0;
             if (a != 0) {
@@ -332,12 +351,16 @@
             }
             a++;
             
+        }completion:^(BOOL finished) {
+            self.fontBar.hidden = YES;
+            [self.fontBar removeFromSuperview];
         }];
     }else{
         // 键盘抬起
         float height = pDeviceHeight-pStatusBarHeight-pNavigationHeight-self.toolBarView.frame.size.height-frame.size.height;
         self.jpHeight = frame.size.height;
         [self.editorView setContentHeight: height];
+        self.isKeyboardPop = YES;
         
         self.bottomBgV.hidden = YES;
         self.toolBarView.fontButton.selected = NO;
@@ -890,9 +913,14 @@
     }
     
     if (!self.fontBar.hidden) {
-        self.fontBar.hidden = YES;
-        self.toolBarView.fontButton.selected = NO;
-        self.toolBarView.top = SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height;
+        [UIView animateWithDuration:0.25 animations:^{
+            self.fontBar.frame = CGRectMake(0, SCREEN_H, SCREEN_W, self.jpHeight);
+            self.toolBarView.fontButton.selected = NO;
+            self.toolBarView.top = SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height;
+        }completion:^(BOOL finished) {
+            self.fontBar.hidden = YES;
+            [self.fontBar removeFromSuperview];
+        }];
     }
     
 //    [self refreshEditorViewWithFixedHeight];
@@ -1050,7 +1078,7 @@
     }
     
     [[UIApplication sharedApplication].keyWindow addSubview:self.toolBarView];
-    [[UIApplication sharedApplication].keyWindow addSubview:self.fontBar];
+//    [[UIApplication sharedApplication].keyWindow addSubview:self.fontBar];
     
     self.toolBarView.delegate = self;
     [self.toolBarView addObserver:self forKeyPath:@"transform" options:
@@ -1084,7 +1112,7 @@
     if (!_toolBarView) {
         _toolBarView = [KWEditorBar editorBar];
         _toolBarView.frame = CGRectMake(0,self.view.frame.size.height - KWEditorBar_Height-CL_iPhoneXBottomSafeHeight, self.view.frame.size.width, KWEditorBar_Height);
-        _toolBarView.backgroundColor = COLOR(237, 237, 237, 1);
+        _toolBarView.backgroundColor = UIColorFromRGBA(0xFFFFFF, 1);
     }
     return _toolBarView;
 }

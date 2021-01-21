@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +14,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="He2-2J-H9O" userLabel="font">
-                    <rect key="frame" x="0.0" y="1" width="41.5" height="48"/>
+                    <rect key="frame" x="0.0" y="1" width="42.5" height="48"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="JmE-An-1Ft"/>
                     </constraints>
@@ -25,7 +25,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z31-VU-O4g" userLabel="H1">
-                    <rect key="frame" x="41.5" y="1" width="42" height="48"/>
+                    <rect key="frame" x="42.5" y="1" width="42.5" height="48"/>
                     <state key="normal" image="h1_bjq"/>
                     <state key="selected" image="h1_bjq_l">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -35,7 +35,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hD8-Nq-pm8" userLabel="H2">
-                    <rect key="frame" x="83.5" y="1" width="41.5" height="48"/>
+                    <rect key="frame" x="85" y="1" width="42.5" height="48"/>
                     <state key="normal" image="h2_bjq"/>
                     <state key="selected" image="h2_bjq_l"/>
                     <connections>
@@ -43,7 +43,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCc-KM-dYe" userLabel="unorder">
-                    <rect key="frame" x="125" y="1" width="41.5" height="48"/>
+                    <rect key="frame" x="127.5" y="1" width="42.5" height="48"/>
                     <state key="normal" image="点序列_bjq"/>
                     <state key="selected" image="点序列_bjq_l"/>
                     <connections>
@@ -51,7 +51,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CLU-6Q-k6l" userLabel="order">
-                    <rect key="frame" x="166.5" y="1" width="42" height="48"/>
+                    <rect key="frame" x="170" y="1" width="43" height="48"/>
                     <state key="normal" image="数字序列_bjq"/>
                     <state key="selected" image="数字序列_bjq_l"/>
                     <connections>
@@ -59,7 +59,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y7U-Ow-Puv" userLabel="tupian">
-                    <rect key="frame" x="208.5" y="1" width="41.5" height="48"/>
+                    <rect key="frame" x="213" y="1" width="42.5" height="48"/>
                     <state key="normal" image="图片_bjq"/>
                     <state key="selected" image="图片_bjq"/>
                     <connections>
@@ -67,14 +67,13 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f4B-7H-o5e" userLabel="shuxian">
-                    <rect key="frame" x="250" y="1" width="41.5" height="48"/>
-                    <state key="normal" image="I.png"/>
+                    <rect key="frame" x="255.5" y="1" width="34.5" height="48"/>
                     <connections>
                         <action selector="clickLine:" destination="rVY-Md-yuA" eventType="touchUpInside" id="EbB-Pe-2lw"/>
                     </connections>
                 </button>
                 <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hgs-x2-K9G" userLabel="undo">
-                    <rect key="frame" x="291.5" y="1" width="42" height="48"/>
+                    <rect key="frame" x="290" y="1" width="42.5" height="48"/>
                     <state key="normal" image="撤回_bjq_y"/>
                     <state key="selected" image="撤回_bjq"/>
                     <connections>
@@ -82,7 +81,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zQW-lE-t8G" userLabel="redo">
-                    <rect key="frame" x="333.5" y="1" width="41.5" height="48"/>
+                    <rect key="frame" x="332.5" y="1" width="42.5" height="48"/>
                     <state key="normal" image="反撤回_bjq_y"/>
                     <state key="selected" image="反撤回_bjq_y"/>
                     <connections>
@@ -119,7 +118,7 @@
                 <constraint firstItem="f4B-7H-o5e" firstAttribute="leading" secondItem="y7U-Ow-Puv" secondAttribute="trailing" id="dFF-sO-YIw"/>
                 <constraint firstAttribute="bottom" secondItem="He2-2J-H9O" secondAttribute="bottom" id="gJX-UG-vOC"/>
                 <constraint firstItem="Hgs-x2-K9G" firstAttribute="width" secondItem="He2-2J-H9O" secondAttribute="width" id="j9I-Rb-n5i"/>
-                <constraint firstItem="f4B-7H-o5e" firstAttribute="width" secondItem="He2-2J-H9O" secondAttribute="width" id="jbL-TV-yh3"/>
+                <constraint firstItem="f4B-7H-o5e" firstAttribute="width" secondItem="He2-2J-H9O" secondAttribute="width" constant="-8" id="jbL-TV-yh3"/>
                 <constraint firstItem="hD8-Nq-pm8" firstAttribute="centerY" secondItem="He2-2J-H9O" secondAttribute="centerY" id="lhs-qo-97v"/>
                 <constraint firstItem="zQW-lE-t8G" firstAttribute="centerY" secondItem="He2-2J-H9O" secondAttribute="centerY" id="md4-KT-5hb"/>
                 <constraint firstAttribute="bottom" secondItem="He2-2J-H9O" secondAttribute="bottom" id="ojj-xH-4Sf"/>
@@ -137,16 +136,16 @@
                 <outlet property="imageButton" destination="y7U-Ow-Puv" id="7WN-gI-1P2"/>
                 <outlet property="orderButton" destination="CLU-6Q-k6l" id="moS-4X-Eit"/>
                 <outlet property="redoButton" destination="zQW-lE-t8G" id="aC4-qt-Lji"/>
+                <outlet property="sepLineBtn" destination="f4B-7H-o5e" id="IUl-hJ-5LA"/>
                 <outlet property="undoButton" destination="Hgs-x2-K9G" id="GEm-ey-Uen"/>
                 <outlet property="unorderButton" destination="dCc-KM-dYe" id="Xsk-1H-16m"/>
             </connections>
-            <point key="canvasLocation" x="-212" y="-22"/>
+            <point key="canvasLocation" x="-193" y="-21"/>
         </view>
     </objects>
     <resources>
         <image name="Aa_bjq" width="20" height="20"/>
         <image name="Aa_bjq_l" width="20" height="20"/>
-        <image name="I.png" width="20" height="20"/>
         <image name="h1_bjq" width="20" height="20"/>
         <image name="h1_bjq_l" width="20" height="20"/>
         <image name="h2_bjq" width="20" height="20"/>

@@ -18,7 +18,7 @@
 @interface DPCFontStyleBar()
 //@property (nonatomic,strong) UIView *scroBarView;
 //@property (nonatomic,strong) UIButton *autoScroBtn;
-//@property (nonatomic,strong) NSArray *items;
+@property (nonatomic,strong) NSArray *items;
 @property (nonatomic, strong) UIView *wzys_bgV;
 @property (nonatomic, copy) NSString *lastSelectOrderTag;
 
@@ -54,13 +54,13 @@
     wzgs_bgV.layer.masksToBounds = YES;
     [self addSubview:wzgs_bgV];
 
-    NSArray *wzgsArr = @[self.boldItem, self.italicItem, self.underlineItem];
-    NSInteger itemsCount = wzgsArr.count;
+    self.items = @[self.boldItem, self.italicItem, self.underlineItem, self.color_black, self.color_gray, self.color_orange, self.color_red, self.color_green, self.color_blue, self.color_purple];
+    NSInteger itemsCount = 3;
     CGFloat w = 110;
     CGFloat h = 50;
     CGFloat gap = (SCREEN_W-16-16-w*itemsCount)/(itemsCount-1);
     for (int i = 0; i < itemsCount; i++) {
-        UIButton *button = wzgsArr[i];
+        UIButton *button = self.items[i];
         button.frame = CGRectMake(i*(w+gap), 0, w, h);
         button.tag = i;
 //        UIRectCorner rectCorner = UIRectCornerAllCorners;
@@ -92,13 +92,13 @@
     self.wzys_bgV.layer.masksToBounds = YES;
     [self addSubview:self.wzys_bgV];
     
-    NSArray *wzysArr = @[self.color_black, self.color_gray, self.color_orange, self.color_red, self.color_green, self.color_blue, self.color_purple];
-    NSInteger itemsCount1 = wzysArr.count;
+//    NSArray *wzysArr = @[self.color_black, self.color_gray, self.color_orange, self.color_red, self.color_green, self.color_blue, self.color_purple];
+    NSInteger itemsCount1 = self.items.count-3;
     CGFloat ww = self.wzys_bgV.width/itemsCount1;
     CGFloat hh = 50;
-    for (int i = 0; i < itemsCount1; i++) {
-        UIButton *button = wzysArr[i];
-        button.frame = CGRectMake(i*ww, 0, ww, hh);
+    for (int i = 3; i < self.items.count; i++) {
+        UIButton *button = self.items[i];
+        button.frame = CGRectMake((i-3)*ww, 0, ww, hh);
         button.tag = i;
         [self.wzys_bgV addSubview:button];
     }
@@ -139,6 +139,7 @@
 - (void)updateFontBarWithButtonName:(NSString *)name{
     
      CLog(@"name = %@",name);
+//    3,bold,justifyLeft,div,fonts
     
 //    NSArray *itemNames = [name componentsSeparatedByString:@","];
 //    NSMutableArray *tempArr = [NSMutableArray array];

@@ -67,11 +67,18 @@
     }
     self.demoVC.superScrollOffsetH = scrollView.contentOffset.y;
    
-    if (!self.demoVC.fontBar.hidden) {
-        self.demoVC.fontBar.hidden = YES;
+    [UIView animateWithDuration:0.25 animations:^{
         self.demoVC.toolBarView.fontButton.selected = NO;
         self.demoVC.toolBarView.top = SCREEN_H - CL_iPhoneXBottomSafeHeight - KWEditorBar_Height;
-    }
+        if (!self.demoVC.fontBar.hidden) {
+            self.demoVC.fontBar.frame = CGRectMake(0, SCREEN_H, SCREEN_W, self.demoVC.jpHeight);
+        }
+    }completion:^(BOOL finished) {
+        if (!self.demoVC.fontBar.hidden) {
+            self.demoVC.fontBar.hidden = YES;
+            [self.demoVC.fontBar removeFromSuperview];
+        }
+    }];
 }
 
 - (void)getHTMLText{

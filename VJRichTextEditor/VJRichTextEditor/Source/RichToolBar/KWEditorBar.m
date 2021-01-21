@@ -10,11 +10,26 @@
 #define COLOR(r,g,b,a) ([UIColor colorWithRed:(float)r/255.f green:(float)g/255.f blue:(float)b/255.f alpha:a])
 @interface KWEditorBar()
 @property (nonatomic,strong) CALayer *topline;
+@property (weak, nonatomic) IBOutlet UIButton *sepLineBtn;
 @end
 @implementation KWEditorBar
 
 - (void)awakeFromNib{
     [super awakeFromNib];
+    [self setupLine];
+    
+    self.layer.backgroundColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1.0].CGColor;
+    self.layer.shadowColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.06].CGColor;
+    self.layer.shadowOffset = CGSizeMake(0,-2);
+    self.layer.shadowOpacity = 1;
+    self.layer.shadowRadius = 6;
+}
+
+- (void)setupLine{
+    [self.sepLineBtn setTitle:@"|" forState:UIControlStateNormal];
+    [self.sepLineBtn setTitleColor:UIColorFromRGBA(0xD8D8D8, 1) forState:UIControlStateNormal];
+    self.sepLineBtn.adjustsImageWhenHighlighted = NO;
+    self.sepLineBtn.showsTouchWhenHighlighted = NO;
 }
 
 - (CALayer *)topline{

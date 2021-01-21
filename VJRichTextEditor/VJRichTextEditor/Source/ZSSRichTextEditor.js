@@ -235,11 +235,13 @@ zss_editor.getSelectedNode = function() {
 
 
 zss_editor.setBold = function() {
+    zss_editor.restorerange();
     document.execCommand('bold', false, null);
     zss_editor.enabledEditingItems();
 }
 
 zss_editor.setItalic = function() {
+    zss_editor.restorerange();
     document.execCommand('italic', false, null);
     zss_editor.enabledEditingItems();
 }
@@ -260,6 +262,7 @@ zss_editor.setStrikeThrough = function() {
 }
 
 zss_editor.setUnderline = function() {
+//    zss_editor.restorerange();
     document.execCommand('underline', false, null);
     zss_editor.enabledEditingItems();
 }
@@ -281,11 +284,6 @@ zss_editor.setHorizontalRule = function() {
 
 zss_editor.setFontSize = function(fontSize){
     document.execCommand("fontSize", false, fontSize);
-    zss_editor.enabledEditingItems();
-}
-
-zss_editor.setTextColor = function(textColor){
-    document.execCommand("textColor", false, textColor);
     zss_editor.enabledEditingItems();
 }
 
