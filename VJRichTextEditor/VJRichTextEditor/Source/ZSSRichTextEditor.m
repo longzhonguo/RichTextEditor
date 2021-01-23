@@ -137,7 +137,7 @@
         case 0:{//字体
             editorBar.fontButton.selected = !editorBar.fontButton.selected;
             if (editorBar.fontButton.selected) {
-                [self.view addSubview:self.fontBar];
+                [[UIApplication sharedApplication].windows.lastObject addSubview:self.fontBar];
             }else{
                 [self.fontBar removeFromSuperview];
             }
@@ -186,6 +186,7 @@
     if (self.toolBarView.transform.ty>=0) {
         [self.editorView showKeyboardContent];
     }
+    [fontBar removeFromSuperview];
     switch (button.tag) {
         case 0:{
             //粗体
