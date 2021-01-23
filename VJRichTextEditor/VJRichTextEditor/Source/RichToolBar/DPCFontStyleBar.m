@@ -135,27 +135,84 @@
     }
 }
 
+- (void)currentColorWithRGB:(NSString *)rgbStr{
+    for (UIButton *btn in self.wzys_bgV.subviews) {
+        btn.selected = NO;
+    }
+    if ([@"rgb(128,%20128,%20128)" isEqualToString:rgbStr]) {
+        // 灰色
+        self.color_gray.selected = YES;
+    } else if ([@"rgb(255,%20165,%200)" isEqualToString:rgbStr]) {
+        // 橙色
+        self.color_orange.selected = YES;
+    } else if ([@"rgb(255,%200,%200)" isEqualToString:rgbStr]) {
+        // 红色
+        self.color_red.selected = YES;
+    } else if ([@"rgb(0,%20128,%200)" isEqualToString:rgbStr]) {
+        // 绿色
+        self.color_green.selected = YES;
+    } else if ([@"rgb(0,%200,%20255)" isEqualToString:rgbStr]) {
+        // 蓝色
+        self.color_blue.selected = YES;
+    } else if ([@"rgb(128,%200,%20128)" isEqualToString:rgbStr]) {
+        // 紫色
+        self.color_purple.selected = YES;
+    } else {
+        // rgb(0,%200,%200) 黑色
+        self.color_black.selected = YES;
+    }
+}
 #pragma mark - 代理方法
 - (void)updateFontBarWithButtonName:(NSString *)name{
     
      CLog(@"name = %@",name);
 //    3,bold,justifyLeft,div,fonts
-    
-//    NSArray *itemNames = [name componentsSeparatedByString:@","];
-//    NSMutableArray *tempArr = [NSMutableArray array];
-//    for (NSString *orderTag in itemNames) {
-//            for (UIButton *btn in self.items) {
-//                if (![tempArr containsObject:btn] && btn.orderTag.length > 0) {
-//                    if ([btn.orderTag isEqualToString:orderTag]) {
-//                        btn.selected = YES;
-//                         [tempArr addObject:btn];
-//                    }
-//                    else{
-//                        btn.selected = NO;
-//                    }
+    NSMutableString *mStr = [NSMutableString stringWithString:name];
+    if ([mStr containsString:@"rgb("]) {
+        NSRange rangeStart = [name rangeOfString:@"rgb("];
+        NSRange rangeEnd = [name rangeOfString:@")"];
+        NSRange colorRang = NSMakeRange(rangeStart.location, rangeEnd.location-rangeStart.location+1);
+        CLog(@"%@", [name substringWithRange:colorRang]);
+        [mStr deleteCharactersInRange:colorRang];
+        [self currentColorWithRGB: [name substringWithRange:colorRang]];
+    }
+    NSArray *itemNames = [mStr componentsSeparatedByString:@","];
+    NSMutableArray *tempArr = [NSMutableArray array];
+    for (NSString *orderTag in itemNames) {
+            for (UIButton *btn in self.items) {
+                CLog(@"%@", btn.orderTag);
+                if ([btn.orderTag isEqualToString:@"rgb(24,%2037,%2044)"]) {
+                    CLog(@"黑色");
+                    CLog(@"");
+                }else if ([btn.orderTag isEqualToString:@""]){
+                    CLog(@"");
+                }else if ([btn.orderTag isEqualToString:@""]){
+                    CLog(@"");
+                }else if ([btn.orderTag isEqualToString:@""]){
+                    
+                }else if ([btn.orderTag isEqualToString:@""]){
+                    
+                }else if ([btn.orderTag isEqualToString:@""]){
+                    
+                }else if ([btn.orderTag isEqualToString:@""]){
+                    
+                }else if ([btn.orderTag isEqualToString:@""]){
+                    
+                }
+//                if (![tempArr containsObject:btn]) {
+////                    if ([btn.orderTag isEqualToString:orderTag]) {
+////                        btn.selected = YES;
+////                         [tempArr addObject:btn];
+////                    }
+////                    else{
+////                        btn.selected = NO;
+////                    }
+//
 //                }
-//            }
-//    }
+//                CLog(@"%@", btn.orderTag);
+//                CLog(@"");
+            }
+    }
 //
 //
 //    if (!self.heading1Item.selected && !self.heading2Item.selected && !self.heading3Item.selected) {

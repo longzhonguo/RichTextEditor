@@ -223,7 +223,7 @@
     }
     [self.editorView focusTextEditor];
     
-    CLog(@"点击了button %@", button.orderTag);
+//    CLog(@"点击了button %@", button.orderTag);
     if ([@"bold" isEqualToString:button.orderTag]) {
         //粗体
         [self.editorView setBold];
@@ -493,11 +493,13 @@
     if ([urlString hasPrefix:@"state-title://"] || [urlString hasPrefix:@"state-abstract-title://"]) {
         self.fontBar.hidden = YES;
         self.toolBarView.hidden = YES;
+        [self.fontBar removeFromSuperview];
     }else if([urlString rangeOfString:@"callback://0/"].location != NSNotFound){
 //        self.fontBar.hidden = NO;
         self.toolBarView.hidden = NO;
         //更新 toolbar
         NSString *className = [urlString stringByReplacingOccurrencesOfString:@"callback://0/" withString:@""];
+        CLog(@"%@",className);
         [self.fontBar updateFontBarWithButtonName:className];
     }
     
@@ -750,6 +752,45 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
 
     decisionHandler(WKNavigationActionPolicyAllow);
+    
+//    NSString *query = [navigationAction.request.URL query];
+//
+//    NSString *urlString = [navigationAction.request.URL absoluteString];
+//
+//    decisionHandler(WKNavigationActionPolicyAllow);
+//
+//    NSLog(@"web request");
+//    NSLog(@"%@", urlString);
+//    NSLog(@"%@", query);
+//
+//
+//    if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
+//
+//        //On the old UIWebView delegate it returned false Bool here
+//        //TODO: what should we do now?
+//
+//    } else if ([urlString rangeOfString:@"callback://0/"].location != NSNotFound) {
+//
+//        // We recieved the callback
+//        NSString *className = [urlString stringByReplacingOccurrencesOfString:@"callback://0/" withString:@""];
+//        CLog(@"%@",className);
+//        [self.fontBar updateFontBarWithButtonName:className];
+//
+//    } else if ([urlString rangeOfString:@"debug://"].location != NSNotFound) {
+//
+//        NSLog(@"Debug Found");
+//
+//        // We recieved the callback
+//        NSString *debug = [urlString stringByReplacingOccurrencesOfString:@"debug://" withString:@""];
+//        debug = [debug stringByReplacingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy];
+//        NSLog(@"%@", debug);
+//
+//    } else if ([urlString rangeOfString:@"scroll://"].location != NSNotFound) {
+//
+//        NSInteger position = [[urlString stringByReplacingOccurrencesOfString:@"scroll://" withString:@""] integerValue];
+////        [self editorDidScrollWithPosition:position];
+//
+//    }
     
 }
 

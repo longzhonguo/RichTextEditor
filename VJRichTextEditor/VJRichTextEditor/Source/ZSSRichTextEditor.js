@@ -117,16 +117,13 @@ zss_editor.calculateEditorHeightWithCaretPosition = function() {
             var a = offsetY + height - c;
             
             if(a>0 && a<lineHeight){
-//                alert("弹窗~~~1");
                 var pos = c - height + lineHeight;
                 window.scrollTo(0, pos);
             }else if(c >= offsetY + height){
-//                alert("弹窗~~~2");
                 var pos = c - height + lineHeight + 100;
                 window.scrollTo(0, pos);
             }else{
                 if(zss_editor.touchbegin == true){
-//                    alert("弹窗~~~3");
                     
                     zss_editor.touchbegin = false;
                     
@@ -193,16 +190,22 @@ zss_editor.getCaretYPosition = function() {
 zss_editor.backuprange = function(){
     var selection = window.getSelection();
     var range = selection.getRangeAt(0);
-    
     zss_editor.currentSelection = {"startContainer": range.startContainer, "startOffset":range.startOffset,"endContainer":range.endContainer, "endOffset":range.endOffset};
+//    alert(zss_editor.currentSelection);
 }
 
 zss_editor.testRange = function(){
     
-    var selection = window.getSelection();
-    var range = selection.getRangeAt(0);
-    
-    return range.endOffset;
+//    var selection = window.getSelection();
+//    var range = selection.getRangeAt(0);
+//
+//    return range.endOffset;
+    var selection = window.getSelection(); //光标所在位置
+    selection.removeAllRanges(); //该方法用于将用户当前选取的所有内容设定为非选取状态
+    var range = document.createRange();
+    range.setStart(zss_editor.currentSelection.startContainer, zss_editor.currentSelection.startOffset);
+    range.setEnd(zss_editor.currentSelection.endContainer, zss_editor.currentSelection.endOffset);
+//    alert(zss_editor.currentSelection.startContainer);
 }
 
 
@@ -235,13 +238,11 @@ zss_editor.getSelectedNode = function() {
 
 
 zss_editor.setBold = function() {
-    zss_editor.restorerange();
     document.execCommand('bold', false, null);
     zss_editor.enabledEditingItems();
 }
 
 zss_editor.setItalic = function() {
-    zss_editor.restorerange();
     document.execCommand('italic', false, null);
     zss_editor.enabledEditingItems();
 }
@@ -262,7 +263,6 @@ zss_editor.setStrikeThrough = function() {
 }
 
 zss_editor.setUnderline = function() {
-//    zss_editor.restorerange();
     document.execCommand('underline', false, null);
     zss_editor.enabledEditingItems();
 }
@@ -379,14 +379,13 @@ zss_editor.setFontFamily = function(fontFamily) {
 }
 
 zss_editor.setTextColor = function(color) {
-
     zss_editor.restorerange();
+//    alert(window.getSelection());
     document.execCommand("styleWithCSS", null, true);
     document.execCommand('foreColor', false, color);
     document.execCommand("styleWithCSS", null, false);
     zss_editor.enabledEditingItems();
     // document.execCommand("removeFormat", false, "foreColor"); // Removes just foreColor
-
 }
 
 zss_editor.setBackgroundColor = function(color) {
@@ -603,6 +602,21 @@ zss_editor.isCommandEnabled = function(commandName) {
     return document.queryCommandState(commandName);
 }
 
+function BGRToRGB(bgrColor) {
+   var color = bgrColor;
+   if( color.length != 6 ) {
+      // 补位，关键！
+      if (color.length % 2) { clor = "0" + color };
+       // 为交换rb做准备
+       color = "0000" + color
+       // 剪切多余位
+       color = color.substr(color.length - 6);
+    }
+    // 颠倒 rgb
+    color = color.replace(/([\w]{2})([\w]{2})([\w]{2})/, "$3$2$1");
+    return color;
+}
+
 zss_editor.enabledEditingItems = function(e) {
     
     var items = [];
@@ -611,9 +625,11 @@ zss_editor.enabledEditingItems = function(e) {
     if (fontSizeblock.length > 0) {
         items.push(fontSizeblock);
     }
-    var textColorblock = document.queryCommandValue('textColor');
-    if (textColorblock.length > 0) {
-        items.push(textColorblock);
+    
+    var textColor1 = document.queryCommandValue('foreColor');
+    if (textColor1.length>0){
+        items.push(textColor1);
+        alert(textColor1);
     }
     
     if (zss_editor.isCommandEnabled('bold')) {
@@ -679,9 +695,11 @@ zss_editor.enabledEditingItems = function(e) {
             items.push('backgroundColor');
         }
 //        // Text Color
-//        var textColor = t.css('color');
+////        var textColor = t.css('color');
+//        var textColor = t.css('foreColor');
 //        if (textColor.length != 0 && textColor != 'rgba(0, 0, 0, 0)' && textColor != 'rgb(0, 0, 0)' && textColor != 'transparent') {
-//            items.push('textColor');
+//            items.push(textColor);
+//            alert(textColor);
 //        }
         
         //Fonts
