@@ -186,7 +186,7 @@
     if (self.toolBarView.transform.ty>=0) {
         [self.editorView showKeyboardContent];
     }
-    [fontBar removeFromSuperview];
+//    [fontBar removeFromSuperview];
     switch (button.tag) {
         case 0:{
             //粗体

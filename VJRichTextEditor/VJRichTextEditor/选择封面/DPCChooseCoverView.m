@@ -60,7 +60,7 @@
     
     UIView *collegeBgV = [[UIView alloc] initWithFrame:CGRectMake(0, imgV1.bottom+7, SCREEN_W, 83)];
     collegeBgV.userInteractionEnabled=YES;
-    collegeBgV.backgroundColor=[UIColor yellowColor];//test
+//    collegeBgV.backgroundColor=[UIColor yellowColor];//test
     [self addSubview:collegeBgV];
     
     self.category_list = @[@"设计", @"美术", @"国画", @"书法", @"短视频", @"篆刻", @"公益", @"兴趣"];
